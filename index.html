@@ -40,11 +40,13 @@
 
       <div class="card">
         <h3 class="card-header text-uppercase">Enter your city here</h3>
-        <form id="enter-city" class="card-body">
-          <label class="form-label" for="username"></label>
-          <input name="username" id="username" type="text" placeholder="Ex. New York City" autofocus="true" class="form-input" />
-          <button type="submit" class="btn">Search</button>
-        </form>
+        <form id="where">
+          <label for="location-input"></label>
+          <input type="text" id="location-input" placeholder="Ex. New York City">
+          <input type="text" id="date-input" placeholder="Ex. 01/01/2022">
+          <br>
+          <input type="submit" value="Search" id="search-location">
+      </form>
       </div>
 
       <div class="card">
@@ -53,6 +55,8 @@
         </div>
       </div>
     </div>
+
+    <div class = "row" id="ticketmaster"></div>
 
     <div class="col-12 col-md-8">
       <h2 class="subtitle">Results: <span id="repo-search-term"></span></h2>
@@ -72,26 +76,10 @@
     </div>
     </div>
   </main>
-
-  <script src="./assets/js/homepage.js"></script>
-  <!-- this is a testing for git local  branch push -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+  <script src="./assets/script.js"></script>
 </body>
 
 </html>
-
-     
-                
-      
-
-
-
-
-
-
-
-
-
-<script>"./assets/script.js"</script>
-</body>
-
-</html>
+Footer
