@@ -1,7 +1,5 @@
 var savedLocations = [];
 
-
-
 $('#search-location').on('click', function(event){
     event.preventDefault();
 
@@ -11,7 +9,6 @@ $('#search-location').on('click', function(event){
 
     $("#location-input").val('');
     
-
     localStorage.setItem("saved", savedLocations);
     // console.log(savedLocations);
     
@@ -28,6 +25,4 @@ $('#search-location').on('click', function(event){
     };
     
     renderSaved();
-
-
 });
