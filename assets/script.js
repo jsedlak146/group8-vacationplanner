@@ -12,7 +12,7 @@ $('#search-location').on('click', function(event){
     var searchDateUnformatted = $('#date-input').val().trim();  //value received from user input
     var ticketmasterStartDate = dayjs(searchDateUnformatted).format('YYYY-MM-DD');  // user input reformatted to ticketmaster required format using dayjs
     var ticketmasterEndDate = (dayjs(ticketmasterStartDate).add(1, 'day')).format('YYYY-MM-DD'); // user input + 1 day using dayjs
-    
+    var method = "get";
 
     savedLocations.push(searchLocation);
 
@@ -37,6 +37,7 @@ $('#search-location').on('click', function(event){
     renderSaved();
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
+    apiGet(method, searchLocation);
 
 });
 
@@ -86,14 +87,23 @@ function getTicketMaster(location, startDate, endDate) {
 function clearSearchResults() {
   ticketmasterEl.empty();
 }
+/////
 
 const apiKey = "5ae2e3f221c38a28845f05b674be1c8e5e40773617623dcece413dea";
 
 var openMapEl = $(`#openmap`);
 
+
+$('#search-location').on('click', function(event){
+  event.preventDefault();
+  var searchLocation = $('#location-input').val().trim();
+});
+
 function apiGet(method, query) {
+  var method = "get";
   return new Promise(function(resolve, reject) {
-    var otmAPI =`https://api.opentripmap.com/0.1/en/places/=${cityName}&appid=${apiKey}`;
+    var otmAPI =`https://api.opentripmap.com/0.1/en/places/ + ${method} + "?apikey=" + ${apiKey}`;
+
     if (query !== undefined) {
      otmAPI += "&" + query;
     }
@@ -105,3 +115,4 @@ function apiGet(method, query) {
       });
     });
 }
+
