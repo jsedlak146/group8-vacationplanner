@@ -2,8 +2,11 @@ var savedLocations = [];
 const apiKey = "FtEqYpIoWBFSbSArl0CV46XT95pYEReh";
 const ticketMasterUrl ="https://app.ticketmaster.com/discovery/v2/events?apikey=FtEqYpIoWBFSbSArl0CV46XT95pYEReh&locale=*&startDateTime=2023-04-08T11:10:00Z&endDateTime=2023-04-09T11:11:00Z&city=London";
 
-var ticketmasterEl = $("#ticketmaster");
 
+const sideNav = document.querySelector(".sidenav");
+M.Sidenav.init(sideNav, {});
+
+var ticketmasterEl = $("#ticketmaster");
 
 
 $('#search-location').on('click', function(event){
