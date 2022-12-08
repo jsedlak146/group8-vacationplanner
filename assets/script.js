@@ -15,6 +15,7 @@ $('#search-location').on('click', function(event){
     savedLocations.push(searchLocation);
 
     $("#location-input").val('');
+    $("#date-input").val('');
     
     localStorage.setItem("saved", savedLocations);
     // console.log(savedLocations);
@@ -84,8 +85,22 @@ function clearSearchResults() {
   ticketmasterEl.empty();
 }
 
- 
-        
+function getAirbnb() {
+  var settings = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': 'a2bc05b236msh7287f021f76321ap10f7f6jsn319c2f597455',
+      'X-RapidAPI-Host': 'airbnb13.p.rapidapi.com'
+    }
+  };
+  fetch('https://airbnb13.p.rapidapi.com/search-location?location=Paris&checkin=2022-05-16&checkout=2022-05-17&adults=1&children=0&infants=0&page=1', options)
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(err => console.error(err));
+  
+  };
+
+
    
 
  
