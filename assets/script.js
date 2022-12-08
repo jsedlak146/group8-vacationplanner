@@ -87,9 +87,21 @@ function clearSearchResults() {
   ticketmasterEl.empty();
 }
 
- 
-        
-   
+const apiKey = "5ae2e3f221c38a28845f05b674be1c8e5e40773617623dcece413dea";
 
- 
+var openMapEl = $(`#openmap`);
 
+function apiGet(method, query) {
+  return new Promise(function(resolve, reject) {
+    var otmAPI =`https://api.opentripmap.com/0.1/en/places/=${cityName}&appid=${apiKey}`;
+    if (query !== undefined) {
+     otmAPI += "&" + query;
+    }
+    fetch(otmAPI)
+    .then(response => response.json())
+    .then(data => resolve(data))
+    .catch(function(err) {
+      console.log("Fetch Error :-S", err);
+      });
+    });
+}
