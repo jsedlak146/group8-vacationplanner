@@ -3,6 +3,8 @@ var savedLocations = [];
 
 var ticketmasterEl = $("#ticketmaster");
 var breweryEl = $("#breweries");
+var airbnbEl = $("#airbnb");
+
 
 
 $('#search-location').on('click', function(event){
@@ -17,8 +19,8 @@ $('#search-location').on('click', function(event){
     savedLocations.push(searchLocation);
 
     $("#location-input").val('');
+    $("#date-input").val('');
     
-
     localStorage.setItem("saved", savedLocations);
     // console.log(savedLocations);
     
@@ -38,6 +40,7 @@ $('#search-location').on('click', function(event){
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
     getBreweries(searchLocation);
+    getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 
 });
 
@@ -89,13 +92,13 @@ function clearSearchResults() {
 }
 
  function getBreweries(location) {
-  
+    
     const breweryUrl = "https://api.openbrewerydb.org/breweries?by_city=" + location + "&per_page=10";
     fetch(breweryUrl)
     .then(function(response) {
 
       return response.json()
-
+  
     })
     .then(function(data) {
         console.log((data));
@@ -110,12 +113,65 @@ function clearSearchResults() {
                 <li class="brewery-names">${breweryName + ", Address: " + breweryLocation + ", Phone: " + breweryPhone + ", url: " + "<a href=" + breweryUrl + ">" + breweryUrl + "</a>"}</li>
               </ul>
           `);
-        };
+  };
     })
 
  }
-        
-   
 
- 
+ function getAirbnb(location, checkInDate, checkOutDate) {
+  var settings = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': 'a2bc05b236msh7287f021f76321ap10f7f6jsn319c2f597455',
+      'X-RapidAPI-Host': 'airbnb13.p.rapidapi.com'
+    }
+  };
+  var airbnbUrl = "https://airbnb13.p.rapidapi.com/search-location?location=" + location + "&checkin=" + checkInDate + "&checkout=" + checkOutDate + "&adults=1&children=0&infants=0&page=1"
+  // 'https://airbnb13.p.rapidapi.com/search-location?location=Paris&checkin=2023-02-16&checkout=2023-02-17&adults=1&children=0&infants=0&page=1'
+  
+  // var location = $('#location-input').val().trim();
+  // var unformattedDate = $('#date-input').val().trim();
+  // var checkInDate = dayjs(unformattedDate).format('YYYY-MM-DD');
+  // var checkOutDate = (dayjs(checkInDate).add(1, 'day')).format('YYYY-MM-DD');
 
+  fetch(airbnbUrl, settings) 
+    .then(function(response){
+      return response.json()
+    })
+    .then(function(data) {
+      console.log(data);
+      for (var i = 0; i < 6; i++) {
+        var listingName = data.results[i].name;
+        var listingAddress = data.results[i].address;
+        var listingPrice = data.results[i].price.rate
+        var listingRating = data.results[i].rating;
+        var reviewCount = data.results[i].reviewsCount;
+        var listingImg = data.results[i].images[0];
+        var listingUrl = data.results[i].url;
+
+        airbnbEl.append(`
+        <div class="col s6 m3 l2">
+          <h3>Airbnb Listings</h3>
+        <div class="card hoverable airbnb-card">
+          <div class="card-image">
+            <img src=${listingImg}>
+          </div>
+          <div class="listing-content">
+            <p>${listingName}</p>
+            <div>
+              <p>Address: ${listingAddress}</p>
+              <p>Rated: ${listingRating}</p>
+              <p>Number of Reviews: ${reviewCount}</p>
+              <p>Price per Night: ${listingPrice} for 1 adult</p>
+            </div>
+          </div>
+          <div class="card-action">
+            <a href="${listingUrl}" target="_blank">See Listing</a>
+          </div>
+        </div>
+      </div>
+        `)
+      }
+    })
+    .catch(err => console.error(err));
+    }
