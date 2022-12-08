@@ -518,5 +518,11 @@ p {
   }
 }
 
+#breweries h2 {
+  font-size: 3em;
+}
 
+.brewery-names {
+  font-size: 1em;
+}
 
