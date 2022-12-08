@@ -54,7 +54,10 @@ function getTicketMaster(location, startDate, endDate) {
     })
     .then(function(data) {
         console.log((data));
-        for (var i = 0; i < data._embedded.events.length; i++) {
+        ticketmasterEl.append(`
+           <h2>🎫Local Events🎟</h2>
+        `);
+        for (var i = 0; i < 6; i++) {
           var eventName = data._embedded.events[i].name;
           var eventImage = data._embedded.events[i].images[0].url;
           var ticketsUrl = data._embedded.events[i].url;
@@ -99,15 +102,19 @@ function clearSearchResults() {
     })
     .then(function(data) {
         console.log((data));
+        breweryEl.append(`
+           <h2>🍺Local Breweries🍺</h2>
+        `);
         for (var i = 0; i < data.length; i++) {
           var breweryName = data[i].name;
           var breweryLocation = data[i].street + " " + data[i].city + ", " + data[i].state;
           var breweryUrl = data[i].website_url;
+          var breweryUrlAdj = breweryUrl.slice(0,4) + "s" + breweryUrl.slice(4);
           var breweryPhone = data[i].phone;
           
           breweryEl.append(`
               <ul>
-                <li class="brewery-names">${breweryName + ", Address: " + breweryLocation + ", Phone: " + breweryPhone + ", url: " + "<a href=" + breweryUrl + ">" + breweryUrl + "</a>"}</li>
+                <li class="brewery-names">${breweryName + ", Address: " + breweryLocation + ", Phone: " + breweryPhone + ", url: " + "<a href=" + breweryUrlAdj + ">" + breweryUrlAdj + "</a>"}</li>
               </ul>
           `);
         };
