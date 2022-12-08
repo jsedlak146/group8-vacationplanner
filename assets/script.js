@@ -1,6 +1,5 @@
 var savedLocations = [];
-const apiKey = "FtEqYpIoWBFSbSArl0CV46XT95pYEReh";
-const ticketMasterUrl ="https://app.ticketmaster.com/discovery/v2/events?apikey=FtEqYpIoWBFSbSArl0CV46XT95pYEReh&locale=*&startDateTime=2023-04-08T11:10:00Z&endDateTime=2023-04-09T11:11:00Z&city=London";
+
 
 var ticketmasterEl = $("#ticketmaster");
 
@@ -10,6 +9,10 @@ $('#search-location').on('click', function(event){
     event.preventDefault();
 
     var searchLocation = $('#location-input').val().trim();
+    var searchDateUnformatted = $('#date-input').val().trim();  //value received from user input
+    var ticketmasterStartDate = dayjs(searchDateUnformatted).format('YYYY-MM-DD');  // user input reformatted to ticketmaster required format using dayjs
+    var ticketmasterEndDate = (dayjs(ticketmasterStartDate).add(1, 'day')).format('YYYY-MM-DD'); // user input + 1 day using dayjs
+    
 
     savedLocations.push(searchLocation);
 
@@ -32,13 +35,16 @@ $('#search-location').on('click', function(event){
     };
     
     renderSaved();
-
+    clearSearchResults();
+    getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 
 });
 
-getTicketMaster();
 
-function getTicketMaster() {
+
+function getTicketMaster(location, startDate, endDate) {
+  const apiKey = "FtEqYpIoWBFSbSArl0CV46XT95pYEReh";
+  const ticketMasterUrl ="https://app.ticketmaster.com/discovery/v2/events?apikey=" + apiKey + "&locale=*&startDateTime=" + startDate + "T11:10:00Z&endDateTime=" + endDate + "T11:11:00Z&city=" + location;
   fetch(ticketMasterUrl)
     .then(function(response) {
 
@@ -71,6 +77,10 @@ function getTicketMaster() {
           `);
         };
     })
+}
+
+function clearSearchResults() {
+  ticketmasterEl.empty();
 }
 
  
