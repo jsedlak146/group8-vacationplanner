@@ -503,4 +503,20 @@ p {
   }
 }
 
+#plane {
+  width: 25%;
+  animation: moveImgRight 5s ease-out infinite;
+  position: absolute;
+}
+
+@keyframes moveImgRight{
+  0% {
+  transform: translateX(-300%) translateY(-65%);
+  }
+  100% {
+  transform: translateX(300%) translateY(-65%);
+  }
+}
+
+
 
