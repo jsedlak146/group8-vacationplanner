@@ -40,7 +40,7 @@ $('#search-location').on('click', function(event){
 
 });
 
-
+// function to render data received from Ticketmaster API onto cards
 
 function getTicketMaster(location, startDate, endDate) {
   const apiKey = "FtEqYpIoWBFSbSArl0CV46XT95pYEReh";
@@ -57,16 +57,20 @@ function getTicketMaster(location, startDate, endDate) {
           var eventName = data._embedded.events[i].name;
           var eventImage = data._embedded.events[i].images[0].url;
           var ticketsUrl = data._embedded.events[i].url;
+          var eventDate = dayjs(data._embedded.events[i].dates.start.localDate).format('MMM DD YYYY');
+          var eventTime = data._embedded.events[i].dates.start.localTime;
       
           ticketmasterEl.append(`
             
               <div class="col s6 m3 l2">
-                <div class="card hoverable">
+                <div class="card hoverable ticketmaster-card">
                   <div class="card-image">
                     <img src=${eventImage}>
                   </div>
                   <div class="card-content">
                     <p>${eventName}</p>
+                    <p>${eventDate}</p>
+                    <p>${eventTime}</p>
                   </div>
                   <div class="card-action">
                     <a href="${ticketsUrl}">Get Tickets</a>
