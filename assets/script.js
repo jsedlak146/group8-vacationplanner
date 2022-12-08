@@ -2,7 +2,7 @@ var savedLocations = [];
 
 
 var ticketmasterEl = $("#ticketmaster");
-
+var breweryEl = $("#breweries");
 
 
 $('#search-location').on('click', function(event){
@@ -37,6 +37,7 @@ $('#search-location').on('click', function(event){
     renderSaved();
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
+    getBreweries(searchLocation);
 
 });
 
@@ -58,8 +59,7 @@ function getTicketMaster(location, startDate, endDate) {
           var eventImage = data._embedded.events[i].images[0].url;
           var ticketsUrl = data._embedded.events[i].url;
           var eventDate = dayjs(data._embedded.events[i].dates.start.localDate).format('MMM DD YYYY');
-          var eventTime = data._embedded.events[i].dates.start.localTime;
-      
+          var eventTime = data._embedded.events[i].dates.start.localTime
           ticketmasterEl.append(`
             
               <div class="col s6 m3 l2">
@@ -85,9 +85,35 @@ function getTicketMaster(location, startDate, endDate) {
 
 function clearSearchResults() {
   ticketmasterEl.empty();
+  breweryEl.empty();
 }
 
- 
+ function getBreweries(location) {
+  
+    const breweryUrl = "https://api.openbrewerydb.org/breweries?by_city=" + location + "&per_page=10";
+    fetch(breweryUrl)
+    .then(function(response) {
+
+      return response.json()
+
+    })
+    .then(function(data) {
+        console.log((data));
+        for (var i = 0; i < data.length; i++) {
+          var breweryName = data[i].name;
+          var breweryLocation = data[i].street + " " + data[i].city + ", " + data[i].state;
+          var breweryUrl = data[i].website_url;
+          var breweryPhone = data[i].phone;
+          
+          breweryEl.append(`
+              <ul>
+                <li class="brewery-names">${breweryName + ", Address: " + breweryLocation + ", Phone: " + breweryPhone + ", url: " + "<a href=" + breweryUrl + ">" + breweryUrl + "</a>"}</li>
+              </ul>
+          `);
+        };
+    })
+
+ }
         
    
 
