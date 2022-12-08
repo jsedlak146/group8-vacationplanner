@@ -2,7 +2,7 @@ var savedLocations = [];
 
 
 var ticketmasterEl = $("#ticketmaster");
-
+var breweryEl = $("#breweries");
 
 
 $('#search-location').on('click', function(event){
@@ -37,7 +37,7 @@ $('#search-location').on('click', function(event){
     renderSaved();
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
-    apiGet(method, searchLocation);
+    getBreweries(searchLocation);
 
 });
 
@@ -59,8 +59,7 @@ function getTicketMaster(location, startDate, endDate) {
           var eventImage = data._embedded.events[i].images[0].url;
           var ticketsUrl = data._embedded.events[i].url;
           var eventDate = dayjs(data._embedded.events[i].dates.start.localDate).format('MMM DD YYYY');
-          var eventTime = data._embedded.events[i].dates.start.localTime;
-      
+          var eventTime = data._embedded.events[i].dates.start.localTime
           ticketmasterEl.append(`
             
               <div class="col s6 m3 l2">
@@ -86,33 +85,47 @@ function getTicketMaster(location, startDate, endDate) {
 
 function clearSearchResults() {
   ticketmasterEl.empty();
+  breweryEl.empty();
 }
-/////
 
 const apiKey = "5ae2e3f221c38a28845f05b674be1c8e5e40773617623dcece413dea";
+ function getBreweries(location) {
+  
+    const breweryUrl = "https://api.openbrewerydb.org/breweries?by_city=" + location + "&per_page=10";
+    fetch(breweryUrl)
+    .then(function(response) {
 
-var openMapEl = $(`#openmap`);
+      return response.json()
 
+    })
+    .then(function(data) {
+        console.log((data));
+        for (var i = 0; i < data.length; i++) {
+          var breweryName = data[i].name;
+          var breweryLocation = data[i].street + " " + data[i].city + ", " + data[i].state;
+          var breweryUrl = data[i].website_url;
+          var breweryPhone = data[i].phone;
+          
+          breweryEl.append(`
+              <ul>
+                <li class="brewery-names">${breweryName + ", Address: " + breweryLocation + ", Phone: " + breweryPhone + ", url: " + "<a href=" + breweryUrl + ">" + breweryUrl + "</a>"}</li>
+              </ul>
+          `);
+        };
+    })
 
-$('#search-location').on('click', function(event){
-  event.preventDefault();
-  var searchLocation = $('#location-input').val().trim();
-});
+  }
 
-function apiGet(method, query) {
-  var method = "get";
-  return new Promise(function(resolve, reject) {
-    var otmAPI =`https://api.opentripmap.com/0.1/en/places/ + ${method} + "?apikey=" + ${apiKey}`;
-
-    if (query !== undefined) {
-     otmAPI += "&" + query;
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': 'e73ae1a52emsh2147aac4621d516p126b65jsn4b4561360052',
+      'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
     }
-    fetch(otmAPI)
+  };
+  
+  fetch('https://travel-advisor.p.rapidapi.com/locations/v2/auto-complete?query=Paris&lang=en_US&units=km', options)
     .then(response => response.json())
-    .then(data => resolve(data))
-    .catch(function(err) {
-      console.log("Fetch Error :-S", err);
-      });
-    });
-}
+    .then(response => console.log(response))
+    .catch(err => console.error(err));
 
