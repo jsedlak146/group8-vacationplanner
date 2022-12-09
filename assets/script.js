@@ -1,4 +1,6 @@
 var savedLocations = [];
+var savedDates = [];
+
 
 
 var ticketmasterEl = $("#ticketmaster");
@@ -6,40 +8,53 @@ var breweryEl = $("#breweries");
 var airbnbEl = $("#airbnb");
 
 
-
 $('#search-location').on('click', function(event){
     event.preventDefault();
 
-    var searchLocation = $('#location-input').val().trim();
+    var cityName = $('#location-input').val().trim();
     var searchDateUnformatted = $('#date-input').val().trim();  //value received from user input
-    var ticketmasterStartDate = dayjs(searchDateUnformatted).format('YYYY-MM-DD');  // user input reformatted to ticketmaster required format using dayjs
-    var ticketmasterEndDate = (dayjs(ticketmasterStartDate).add(1, 'day')).format('YYYY-MM-DD'); // user input + 1 day using dayjs
+    var inputDate = dayjs(searchDateUnformatted).format('YYYY-MM-DD');  // user input reformatted to ticketmaster required format using dayjs
+    var inputEndDate = (dayjs(inputDate).add(1, 'day')).format('YYYY-MM-DD'); // user input + 1 day using dayjs
     
-    savedLocations.push(searchLocation);
+    savedLocations.push(cityName);
+    savedDates.push(inputDate);
+  
 
     $("#location-input").val('');
     $("#date-input").val('');
     
-    localStorage.setItem("saved", savedLocations);
-    // console.log(savedLocations);
+    localStorage.setItem("saved-location", cityName);
+    localStorage.setItem("saved-date", inputDate);
+    
     
     function renderSaved(){
-        $('#location-views').empty();
+        $('#search-history').empty();
     
         for (var i=0; i< savedLocations.length; i++) {
             var locBtn = $('<button>');
             locBtn.addClass('saved-search-button');
-            locBtn.attr('saved', savedLocations[i]);
+            locBtn.attr('saved-loaction', savedLocations[i]);
+            locBtn.attr('saved-date', savedDates[i]);
             locBtn.text(savedLocations[i]);
             $('#search-history').append(locBtn);
         }
+
     };
-    
+
+    // function displaySearchHistory() {
+    //   $('.saved-search-button').on('click', function(event) {
+    //     event.preventDefault();
+
+    //     searchLocation = $
+
+    //   })
+    // };
+      
     renderSaved();
     clearSearchResults();
-    getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
-    getBreweries(searchLocation);
-    getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
+    getTicketMaster(cityName, inputDate, inputEndDate);
+    getBreweries(cityName);
+    getAirbnb(cityName, inputDate, inputEndDate);
 
 });
 
@@ -198,4 +213,3 @@ function clearSearchResults() {
     //  .then(response => response.json())
     //  .then(response => console.log(response))
     //  .catch(err => console.error(err));
-  
