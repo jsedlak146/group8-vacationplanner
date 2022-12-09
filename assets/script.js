@@ -1,10 +1,17 @@
-var savedLocations = [];
+var savedLocations = getLocalStorage();
+
+
 
 
 var ticketmasterEl = $("#ticketmaster");
 var breweryEl = $("#breweries");
 var airbnbEl = $("#airbnb");
 
+renderSaved();
+
+function getLocalStorage() {
+  return JSON.parse(localStorage.getItem("savedLocations")) || [];
+};
 
 
 $('#search-location').on('click', function(event){
@@ -20,20 +27,10 @@ $('#search-location').on('click', function(event){
     $("#location-input").val('');
     $("#date-input").val('');
     
-    localStorage.setItem("saved", savedLocations);
+    localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
     // console.log(savedLocations);
     
-    function renderSaved(){
-        $('#location-views').empty();
     
-        for (var i=0; i< savedLocations.length; i++) {
-            var locBtn = $('<button>');
-            locBtn.addClass('saved-search-button');
-            locBtn.attr('saved', savedLocations[i]);
-            locBtn.text(savedLocations[i]);
-            $('#search-history').append(locBtn);
-        }
-    };
     
     renderSaved();
     clearSearchResults();
@@ -43,6 +40,18 @@ $('#search-location').on('click', function(event){
     //getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 
 });
+
+function renderSaved(){
+  $('#search-history').empty();
+
+  for (var i=0; i< savedLocations.length; i++) {
+      var locBtn = $('<button>');
+      locBtn.addClass('saved-search-button');
+      locBtn.attr('saved', savedLocations[i]);
+      locBtn.text(savedLocations[i]);
+      $('#search-history').append(locBtn);
+  }
+};
 
 // function to render data received from Ticketmaster API onto cards
 
@@ -60,7 +69,7 @@ function getTicketMaster(location, startDate, endDate) {
         ticketmasterEl.append(`
            <h2>🎫Local Events🎟</h2>
         `);
-        for (var i = 0; i < 6; i++) {
+        for (var i = 0; i < data._embedded.events.length; i++) {
           var eventName = data._embedded.events[i].name;
           var eventImage = data._embedded.events[i].images[0].url;
           var ticketsUrl = data._embedded.events[i].url;
@@ -75,8 +84,8 @@ function getTicketMaster(location, startDate, endDate) {
           }
           ticketmasterEl.append(`
             
-              <div class="col s6 m3 l2">
-                <div class="card hoverable ticketmaster-card">
+              <div class="col s6 m3 l2 id="ticketmaster-div">
+                <div class="card small hoverable ticketmaster-card">
                   <div class="card-image">
                     <img src=${eventImage}>
                   </div>
@@ -93,6 +102,17 @@ function getTicketMaster(location, startDate, endDate) {
           
           `);
         };
+        ticketmasterEl.append(`
+        <span id="ticketmaster-span">show more...</span>
+        `);
+        $(function () {
+          $('#ticketmaster-span').click(function () {
+              $('#ticketmaster div:hidden').slice(0, 30).show();
+              if ($('#ticketmaster div').length == $('#ticketmaster div:visible').length) {
+                  $('#ticketmaster-span').hide();
+              }
+          });
+      });
     })
 }
 
@@ -192,7 +212,8 @@ function clearSearchResults() {
       }
     })
     .catch(err => console.error(err));
-    }
+    } 
+
 
    // const options = {
     //  method: 'GET',

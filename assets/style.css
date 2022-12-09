@@ -439,3 +439,16 @@ p {
     transform: rotateY(360deg);
   }
 }
+
+.ticketmaster-card .card-content p {
+  font-size: 0.75em;
+}
+
+#ticketmaster div:nth-child(1n + 8) {
+  display: none;
+}
+
+#ticketmaster-span {
+  color: blue;
+  text-decoration: underline;
+}
