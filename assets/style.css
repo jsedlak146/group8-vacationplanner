@@ -40,8 +40,13 @@ main {
   width: 94%;
 }
 
-p {
-  font-size: 1.2rem;
+
+.header-p {
+  font-size: 1.0rem;
+  position: absolute;
+  right: 28rem;
+  
+  
 }
 
 .btn {
@@ -72,7 +77,7 @@ p {
   display: inline;
 }
 
-.btn-back {
+/* .btn-back {
   border-radius: var(--border-radius);
   color: var(--primary);
   border: none;
@@ -86,14 +91,14 @@ p {
   padding: 15px;
   text-decoration: none;
   font-size: 1.2rem;
-}
+} */
 
-.btn-back:hover {
+/* .btn-back:hover {
   color: var(--primary);
   background-color: var(--tertiary);
   transform: translate(0, 0);
   box-shadow: 2px 2px var(--dark);
-}
+} */
 
 .hero {
   padding: 3% 4%;
@@ -132,9 +137,9 @@ p {
   text-decoration: none;
 }
 
-.list-item:hover {
+/* .list-item:hover {
   background-color: var(--dark);
-}
+} */
 
 .status-icon {
   padding: 2px 5px;
@@ -143,13 +148,13 @@ p {
   border-radius: var(--border-radius);
 }
 
-.icon-danger {
+/* .icon-danger {
   color: rgb(255, 70, 70);
-}
+} */
 
-.icon-success {
+/* .icon-success {
   color: rgb(29, 153, 255);
-}
+} */
 
 /* CARDS */
 .card {
@@ -169,7 +174,7 @@ p {
   padding: 2.5%;
 }
 
-/* FORM */
+FORM
 .form-label,
 .form-input,
 .form-textarea {
@@ -190,19 +195,19 @@ p {
   border-radius: var(--border-radius);
 }
 
-/* HEIGHT / WIDTH UTILS */
-.min-100-vh {
+HEIGHT / WIDTH UTILS 
+ .min-100-vh {
   min-height: 100vh;
 }
 
-.min-100-vw {
+ .min-100-vw {
   min-width: 100vw;
-}
+} 
 
-/* FONT UTILS */
+ FONT UTILS 
 .text-uppercase {
   text-transform: uppercase;
-}
+} 
 
 
 /* FLEX CONTENT */
