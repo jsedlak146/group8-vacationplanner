@@ -444,6 +444,11 @@ p {
   font-size: 0.75em;
 }
 
-#ticketmaster #ticketmaster-div:nth-child(1n + 7) {
+#ticketmaster div:nth-child(1n + 8) {
   display: none;
+}
+
+#ticketmaster-span {
+  color: blue;
+  text-decoration: underline;
 }

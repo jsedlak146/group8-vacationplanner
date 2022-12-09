@@ -1,10 +1,17 @@
-var savedLocations = [];
+var savedLocations = getLocalStorage();
+
+
 
 
 var ticketmasterEl = $("#ticketmaster");
 var breweryEl = $("#breweries");
 var airbnbEl = $("#airbnb");
 
+renderSaved();
+
+function getLocalStorage() {
+  return JSON.parse(localStorage.getItem("savedLocations")) || [];
+};
 
 
 $('#search-location').on('click', function(event){
@@ -20,20 +27,10 @@ $('#search-location').on('click', function(event){
     $("#location-input").val('');
     $("#date-input").val('');
     
-    localStorage.setItem("saved", savedLocations);
+    localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
     // console.log(savedLocations);
     
-    function renderSaved(){
-        $('#location-views').empty();
     
-        for (var i=0; i< savedLocations.length; i++) {
-            var locBtn = $('<button>');
-            locBtn.addClass('saved-search-button');
-            locBtn.attr('saved', savedLocations[i]);
-            locBtn.text(savedLocations[i]);
-            $('#search-history').append(locBtn);
-        }
-    };
     
     renderSaved();
     clearSearchResults();
@@ -43,6 +40,18 @@ $('#search-location').on('click', function(event){
     //getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 
 });
+
+function renderSaved(){
+  $('#search-history').empty();
+
+  for (var i=0; i< savedLocations.length; i++) {
+      var locBtn = $('<button>');
+      locBtn.addClass('saved-search-button');
+      locBtn.attr('saved', savedLocations[i]);
+      locBtn.text(savedLocations[i]);
+      $('#search-history').append(locBtn);
+  }
+};
 
 // function to render data received from Ticketmaster API onto cards
 
@@ -98,9 +107,9 @@ function getTicketMaster(location, startDate, endDate) {
         `);
         $(function () {
           $('#ticketmaster-span').click(function () {
-              $('#ticketmaster #ticketmaster-div:hidden').slice(0, 6).show();
-              if ($('#ticketmaster #ticketmaster-div').length == $('#ticketmaster #ticketmaster-div:visible').length) {
-                  $('span ').hide();
+              $('#ticketmaster div:hidden').slice(0, 30).show();
+              if ($('#ticketmaster div').length == $('#ticketmaster div:visible').length) {
+                  $('#ticketmaster-span').hide();
               }
           });
       });
