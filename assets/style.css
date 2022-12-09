@@ -21,6 +21,7 @@ body {
   font-size: 16px;
 }
 
+<<<<<<< HEAD
 
 
 h1,
@@ -29,6 +30,10 @@ h3,
 h4,
 h5,
 h6 {
+=======
+h1, h2, h3
+{
+>>>>>>> main
   font-weight: 700;
   margin: 0;
   color: var(--dark);
@@ -37,7 +42,7 @@ h6 {
 
 main {
   margin: 20px auto;
-  width: 94%;
+  width: 90%;
 }
 
 
@@ -51,7 +56,10 @@ main {
 
 .btn {
   font-size: 1.3rem;
+<<<<<<< HEAD
   text-decoration: none;
+=======
+>>>>>>> main
   justify-content: center;
   padding: 6px 5px;
   width: 100%;
@@ -59,13 +67,12 @@ main {
   margin: 5px 0;
   border-radius: var(--border-radius);
   color: var(--primary);
-  border: none;
-  outline: none;
   background-color: var(--light-dark);
-  box-shadow: 6px 6px var(--dark);
+  box-shadow: 3px 3px var(--dark);
   transform: translate(-1px, -1px);
 }
 
+<<<<<<< HEAD
 .btn:hover {
   color: var(--primary);
   background-color: var(--tertiary);
@@ -73,10 +80,13 @@ main {
   box-shadow: 2px 2px var(--dark);
 }
 
+=======
+>>>>>>> main
 .btn-inline {
   display: inline;
 }
 
+<<<<<<< HEAD
 /* .btn-back {
   border-radius: var(--border-radius);
   color: var(--primary);
@@ -100,6 +110,8 @@ main {
   box-shadow: 2px 2px var(--dark);
 } */
 
+=======
+>>>>>>> main
 .hero {
   padding: 3% 4%;
   background-color: var(--dark);
@@ -108,7 +120,7 @@ main {
 }
 
 .hero p {
-  max-width: 75%;
+  max-width: 90%;
   text-align: center;
 }
 
@@ -120,9 +132,10 @@ main {
   padding: 0 10px;
   display: inline-block;
   border-radius: var(--border-radius);
-  box-shadow: 6px 5px var(--light-dark);
+  box-shadow: 8px 6px var(--light-dark);
 }
 
+<<<<<<< HEAD
 .list-group {
   padding: 0;
   list-style: none;
@@ -157,6 +170,8 @@ main {
 } */
 
 /* CARDS */
+=======
+>>>>>>> main
 .card {
   margin: 0 0 20px 0;
   border: 3px solid var(--dark);
@@ -166,14 +181,15 @@ main {
 .card-header {
   color: var(--primary);
   background-color: var(--dark);
-  padding: 2.5%;
+  padding: 3%;
   border-radius: calc(.18rem - 1px) calc(.18rem - 1px) 0 0;
 }
 
 .card-body {
-  padding: 2.5%;
+  padding: 4%;
 }
 
+<<<<<<< HEAD
 FORM
 .form-label,
 .form-input,
@@ -197,6 +213,9 @@ FORM
 
 HEIGHT / WIDTH UTILS 
  .min-100-vh {
+=======
+.min-100-vh {
+>>>>>>> main
   min-height: 100vh;
 }
 
@@ -204,13 +223,14 @@ HEIGHT / WIDTH UTILS
   min-width: 100vw;
 } 
 
+<<<<<<< HEAD
  FONT UTILS 
+=======
+>>>>>>> main
 .text-uppercase {
   text-transform: uppercase;
 } 
 
-
-/* FLEX CONTENT */
 .flex-row {
   display: flex;
   flex-wrap: wrap;
@@ -306,12 +326,11 @@ HEIGHT / WIDTH UTILS
   flex: 0 0 100%;
 }
 
-/* col-sm */
 @media screen and (min-width: 640px) {
   .col-sm-1 {
     flex: 0 0 calc(100% * 1 / 12 - 2%);
   }
-
+  
   .col-sm-2 {
     flex: 0 0 calc(100% * 2 / 12 - 2%);
   }
@@ -357,8 +376,6 @@ HEIGHT / WIDTH UTILS
   }
 }
 
-
-/* col-md */
 @media screen and (min-width: 768px) {
   .col-md-1 {
     flex: 0 0 calc(100% * 1 / 12 - 2%);
@@ -409,7 +426,6 @@ HEIGHT / WIDTH UTILS
   }
 }
 
-/* col-lg */
 @media screen and (min-width: 992px) {
   .col-lg-1 {
     flex: 0 0 calc(100% * 1 / 12 - 2%);
@@ -460,7 +476,6 @@ HEIGHT / WIDTH UTILS
   }
 }
 
-/* col-xl */
 @media screen and (min-width: 1200px) {
   .col-xl-1 {
     flex: 0 0 calc(100% * 1 / 12 - 2%);
@@ -512,17 +527,50 @@ HEIGHT / WIDTH UTILS
 }
 
 #plane {
-  width: 25%;
+  width: 15%;
   animation: moveImgRight 5s ease-out infinite;
   position: absolute;
 }
 
 @keyframes moveImgRight {
   0% {
+<<<<<<< HEAD
     transform: translateX(-300%) translateY(-65%);
+=======
+  transform: translateX(-375%) translateY(-65%);
+>>>>>>> main
   }
 
   100% {
+<<<<<<< HEAD
     transform: translateX(300%) translateY(-65%);
   }
 }
+=======
+  transform: translateX(375%) translateY(-65%);
+  }
+}
+
+#breweries h2 {
+  font-size: 3em;
+}
+
+.brewery-names {
+  font-size: 1em;
+}
+
+.ticketmaster-card,
+.airbnb-card {
+  animation: spin 3s;
+  border-radius: 2px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+>>>>>>> main

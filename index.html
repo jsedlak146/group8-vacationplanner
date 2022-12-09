@@ -80,12 +80,16 @@
     <h1 class="app-title"><i class="vaca-planner"></i> Vacation Planner!</h1>
     <p class="header-p">Lost in a new city? Don't know where to go? Not to worry, just search below
 
+    <h1 class="app-title"><i class="vaca-planner"></i> The git Vacation Planner</h1>
+    <p>Lost in a new city? Don't know where to go? Not to worry, just search below!
     </p>
     <img src="./plane.png" id="plane">
   </header>
 
+
+
   <main class="flex-row justify-space-between">
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-3">
 
       <div class="card">
         <h3 class="card-header text-uppercase">Enter your city here</h3>
@@ -96,6 +100,8 @@
           <br>
           <input type="submit" value="Search" id="search-location">
         </form>
+          <input type="submit" class="btn bg-danger" value="Search" id="search-location">
+      </form>
       </div>
 
       <div class="card">
@@ -104,11 +110,18 @@
         </div>
       </div>
     </div>
+    
+    <div class="row" id="airbnb"></div>
 
     <div class="row" id="ticketmaster"></div>
+    <div class = "row" id="ticketmaster"></div>
+    
+    <div id="breweries"></div>
+
+    <div class="row" id="travel"></div>
 
     <div class="col-12 col-md-8">
-      <h2 class="subtitle">Results: <span id="repo-search-term"></span></h2>
+      <h2 class="subtitle"><span id="repo-search-term"></span></h2>
       <div id="results-container" class="list-group"></div>
       <div class="row">
 
@@ -154,3 +167,16 @@
 </body>
 
 </html>
+    <div class="row">
+
+    </div>
+  </div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js" integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
+<script src="./assets/script.js"></script>
+</body>
+
+</html>
+        
