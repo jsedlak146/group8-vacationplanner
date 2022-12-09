@@ -1,5 +1,6 @@
-var savedLocations = [];
-var savedDates = [];
+var savedLocations = getLocalStorage();
+// [];
+var savedDates = getLocalStorageDate();
 
 
 
@@ -7,6 +8,15 @@ var ticketmasterEl = $("#ticketmaster");
 var breweryEl = $("#breweries");
 var airbnbEl = $("#airbnb");
 
+renderSaved()
+
+function getLocalStorage() {
+  return JSON.parse(localStorage.getItem('savedLocations')) || [];
+};
+
+function getLocalStorageDate() {
+  return JSON.parse(localStorage.getItem('savedDates')) || [];
+};
 
 $('#search-location').on('click', function(event){
     event.preventDefault();
@@ -23,38 +33,40 @@ $('#search-location').on('click', function(event){
     $("#location-input").val('');
     $("#date-input").val('');
     
-   
-    localStorage.setItem("saved-location", cityName);
-    localStorage.setItem("saved-date", inputDate);
+   localStorage.setItem('savedLocations', JSON.stringify(savedLocations));
+   localStorage.setItem('save-dates', JSON.stringify(savedDates));
     
-    function renderSaved(){
-        $('#search-history').empty();
-    
-        for (var i=0; i< savedLocations.length; i++) {
-            var locBtn = $('<button>');
-            locBtn.addClass('saved-search-button');
-            locBtn.attr('saved-loaction', savedLocations[i]);
-            locBtn.attr('saved-date', savedDates[i]);
-            locBtn.text(savedLocations[i]);
-
-            $('#search-history').append(locBtn);
-           
-        }
+  
 
 
 
-    };
 
 
-    renderSaved();
     clearSearchResults();
+    renderSaved();
+    
     getTicketMaster(cityName, inputDate, inputEndDate);
     getBreweries(cityName);
     // getAirbnb(cityName, inputDate, inputEndDate);
 
 });
 
-// function for persistent search history
+function renderSaved () {
+        $('#search-history').empty();
+
+        for (var i=0; i< savedLocations.length; i++) {
+              var locBtn = $('<button>');
+              locBtn.addClass('saved-search-button');
+              locBtn.attr('saved-location', savedLocations[i]);
+              locBtn.attr('saved-date', savedDates[i]);
+              locBtn.text(savedLocations[i]);
+
+              
+              
+            $('#search-history').append(locBtn);
+        
+        }
+      };
 
 
 // function to render data from search history button
@@ -62,12 +74,19 @@ $('#search-location').on('click', function(event){
 function displaySearchHistory () {
   
 
-    var savedCityName = $(this).text();
-    var savedInputDate = $(this).attr('saved-date');
+    var savedCityName = $(this).attr('saved-location');
+    var tempDate = $(this).attr('saved-date');
+    var savedDate = dayjs(tempDate).format('YYYY-MM-DD');
+    var defaultEndDate = (dayjs(savedDate).add(1, 'day')).format('YYYY-MM-DD');
 
     console.log(savedCityName)
-    console.log(savedInputDate)
+    console.log(savedDate)
+    console.log(defaultEndDate)
 
+    // clearSearchResults();
+    // getTicketMaster(savedCityName, savedDate, defaultEndDate);
+    // getBreweries(savedCityName);
+    // getAirbnb(savedCityName, savedDate, defaultEndDate);
 
 };
   
@@ -104,7 +123,7 @@ function getTicketMaster(location, startDate, endDate) {
           ticketmasterEl.append(`
             
               <div class="col s6 m3 l2">
-                <div class="card hoverable ticketmaster-card">
+                <div class="card small hoverable ticketmaster-card">
                   <div class="card-image">
                     <img src=${eventImage}>
                   </div>
@@ -125,6 +144,7 @@ function getTicketMaster(location, startDate, endDate) {
 }
 
 function clearSearchResults() {
+  airbnbEl.empty();
   ticketmasterEl.empty();
   breweryEl.empty();
 }
@@ -191,7 +211,7 @@ function clearSearchResults() {
         airbnbEl.append(`
         <div class="col s6 m3 l2">
           <h3>Airbnb Listings</h3>
-        <div class="card hoverable airbnb-card">
+        <div class="card small hoverable airbnb-card">
           <div class="card-image">
             <img src=${listingImg}>
           </div>
