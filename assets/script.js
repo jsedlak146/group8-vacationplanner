@@ -39,6 +39,7 @@ $('#search-location').on('click', function(event){
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
     getBreweries(searchLocation);
+    apiGet(method, searchLocation)
     //getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 
 });
@@ -203,3 +204,18 @@ function clearSearchResults() {
     })
     .catch(err => console.error(err));
     } 
+
+
+   // const options = {
+    //  method: 'GET',
+     // headers: {
+      //  'X-RapidAPI-Key': 'e73ae1a52emsh2147aac4621d516p126b65jsn4b4561360052',
+      //  'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
+    //  }
+   // };
+    
+   // fetch('https://travel-advisor.p.rapidapi.com/locations/v2/auto-complete?query=Paris&lang=en_US&units=km', options)
+    //  .then(response => response.json())
+    //  .then(response => console.log(response))
+    //  .catch(err => console.error(err));
+  
