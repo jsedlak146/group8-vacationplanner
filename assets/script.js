@@ -23,9 +23,9 @@ $('#search-location').on('click', function(event){
     $("#location-input").val('');
     $("#date-input").val('');
     
+   
     localStorage.setItem("saved-location", cityName);
     localStorage.setItem("saved-date", inputDate);
-    
     
     function renderSaved(){
         $('#search-history').empty();
@@ -36,27 +36,41 @@ $('#search-location').on('click', function(event){
             locBtn.attr('saved-loaction', savedLocations[i]);
             locBtn.attr('saved-date', savedDates[i]);
             locBtn.text(savedLocations[i]);
+
             $('#search-history').append(locBtn);
+           
         }
+
+
 
     };
 
-    // function displaySearchHistory() {
-    //   $('.saved-search-button').on('click', function(event) {
-    //     event.preventDefault();
 
-    //     searchLocation = $
-
-    //   })
-    // };
-      
     renderSaved();
     clearSearchResults();
     getTicketMaster(cityName, inputDate, inputEndDate);
     getBreweries(cityName);
-    getAirbnb(cityName, inputDate, inputEndDate);
+    // getAirbnb(cityName, inputDate, inputEndDate);
 
 });
+
+// function for persistent search history
+
+
+// function to render data from search history button
+
+function displaySearchHistory () {
+  
+
+    var savedCityName = $(this).text();
+    var savedInputDate = $(this).attr('saved-date');
+
+    console.log(savedCityName)
+    console.log(savedInputDate)
+
+
+};
+  
 
 // function to render data received from Ticketmaster API onto cards
 
@@ -201,6 +215,7 @@ function clearSearchResults() {
     .catch(err => console.error(err));
     }
 
+    $(document).on('click', '.saved-search-button', displaySearchHistory);
    // const options = {
     //  method: 'GET',
      // headers: {
