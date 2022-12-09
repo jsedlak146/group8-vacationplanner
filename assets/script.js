@@ -1,5 +1,5 @@
 var savedLocations = getLocalStorage();
-
+var savedDates = getLocalStorageDate();
 
 
 
@@ -13,6 +13,9 @@ function getLocalStorage() {
   return JSON.parse(localStorage.getItem("savedLocations")) || [];
 };
 
+function getLocalStorageDate() {
+  return JSON.parse(localStorage.getItem('savedDates')) || [];
+};
 
 $('#search-location').on('click', function(event){
     event.preventDefault();
@@ -23,12 +26,13 @@ $('#search-location').on('click', function(event){
     var ticketmasterEndDate = (dayjs(ticketmasterStartDate).add(1, 'day')).format('YYYY-MM-DD'); // user input + 1 day using dayjs
     
     savedLocations.push(searchLocation);
-
+    savedDates.push(ticketmasterStartDate);
     $("#location-input").val('');
     $("#date-input").val('');
     
     localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
-    // console.log(savedLocations);
+    localStorage.setItem("savedDates", JSON.stringify(savedDates));
+    
     
     
     
@@ -36,8 +40,7 @@ $('#search-location').on('click', function(event){
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
     getBreweries(searchLocation);
-    apiGet(method, searchLocation)
-    //getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
+    getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 
 });
 
@@ -47,10 +50,32 @@ function renderSaved(){
   for (var i=0; i< savedLocations.length; i++) {
       var locBtn = $('<button>');
       locBtn.addClass('saved-search-button');
-      locBtn.attr('saved', savedLocations[i]);
+      locBtn.attr({
+        'saved': savedLocations[i],
+        'saved-date': savedDates[i],
+        });
       locBtn.text(savedLocations[i]);
       $('#search-history').append(locBtn);
   }
+
+};
+
+function displaySearchHistory () {
+
+  var savedCityName = $(this).attr('saved');
+  var tempDate = $(this).attr('saved-date');
+  var savedDate = dayjs(tempDate).format('YYYY-MM-DD');
+  var defaultEndDate = (dayjs(savedDate).add(1, 'day')).format('YYYY-MM-DD');
+
+  console.log(savedCityName)
+  console.log(savedDate)
+  console.log(defaultEndDate)
+
+  clearSearchResults();
+  getTicketMaster(savedCityName, savedDate, defaultEndDate);
+  getBreweries(savedCityName);
+  getAirbnb(savedCityName, savedDate, defaultEndDate);
+
 };
 
 // function to render data received from Ticketmaster API onto cards
@@ -117,6 +142,7 @@ function getTicketMaster(location, startDate, endDate) {
 }
 
 function clearSearchResults() {
+  airbnbEl.empty();
   ticketmasterEl.empty();
   breweryEl.empty();
 }
@@ -165,12 +191,7 @@ function clearSearchResults() {
     }
   };
   var airbnbUrl = "https://airbnb13.p.rapidapi.com/search-location?location=" + location + "&checkin=" + checkInDate + "&checkout=" + checkOutDate + "&adults=1&children=0&infants=0&page=1"
-  // 'https://airbnb13.p.rapidapi.com/search-location?location=Paris&checkin=2023-02-16&checkout=2023-02-17&adults=1&children=0&infants=0&page=1'
-  
-  // var location = $('#location-input').val().trim();
-  // var unformattedDate = $('#date-input').val().trim();
-  // var checkInDate = dayjs(unformattedDate).format('YYYY-MM-DD');
-  // var checkOutDate = (dayjs(checkInDate).add(1, 'day')).format('YYYY-MM-DD');
+
 
   fetch(airbnbUrl, settings) 
     .then(function(response){
@@ -178,6 +199,10 @@ function clearSearchResults() {
     })
     .then(function(data) {
       console.log(data);
+      airbnbEl.append(`
+        <h2> Airbnb Listings </h2>
+      `)
+
       for (var i = 0; i < 6; i++) {
         var listingName = data.results[i].name;
         var listingAddress = data.results[i].address;
@@ -189,12 +214,11 @@ function clearSearchResults() {
 
         airbnbEl.append(`
         <div class="col s6 m3 l2">
-          <h3>Airbnb Listings</h3>
-        <div class="card hoverable airbnb-card">
+        <div class="card medium hoverable airbnb-card">
           <div class="card-image">
             <img src=${listingImg}>
           </div>
-          <div class="listing-content">
+          <div class="card-content">
             <p>${listingName}</p>
             <div>
               <p>Address: ${listingAddress}</p>
@@ -214,17 +238,5 @@ function clearSearchResults() {
     .catch(err => console.error(err));
     } 
 
-
-   // const options = {
-    //  method: 'GET',
-     // headers: {
-      //  'X-RapidAPI-Key': 'e73ae1a52emsh2147aac4621d516p126b65jsn4b4561360052',
-      //  'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
-    //  }
-   // };
-    
-   // fetch('https://travel-advisor.p.rapidapi.com/locations/v2/auto-complete?query=Paris&lang=en_US&units=km', options)
-    //  .then(response => response.json())
-    //  .then(response => console.log(response))
-    //  .catch(err => console.error(err));
   
+   $(document).on('click', '.saved-search-button', displaySearchHistory);

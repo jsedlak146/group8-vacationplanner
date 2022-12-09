@@ -452,3 +452,11 @@ p {
   color: blue;
   text-decoration: underline;
 }
+
+.airbnb-card .card-content p {
+  font-size: 0.75em;
+}
+
+.airbnb-card .card-image {
+  height: 40%;
+}
