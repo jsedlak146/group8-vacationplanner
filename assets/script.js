@@ -39,6 +39,7 @@ $('#search-location').on('click', function(event){
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
     getBreweries(searchLocation);
+    apiGet(method, searchLocation)
     //getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 
 });
