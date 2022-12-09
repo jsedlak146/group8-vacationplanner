@@ -1,5 +1,4 @@
 var savedLocations = getLocalStorage();
-// [];
 var savedDates = getLocalStorageDate();
 
 
@@ -8,10 +7,10 @@ var ticketmasterEl = $("#ticketmaster");
 var breweryEl = $("#breweries");
 var airbnbEl = $("#airbnb");
 
-renderSaved()
+renderSaved();
 
 function getLocalStorage() {
-  return JSON.parse(localStorage.getItem('savedLocations')) || [];
+  return JSON.parse(localStorage.getItem("savedLocations")) || [];
 };
 
 function getLocalStorageDate() {
@@ -21,75 +20,63 @@ function getLocalStorageDate() {
 $('#search-location').on('click', function(event){
     event.preventDefault();
 
-    var cityName = $('#location-input').val().trim();
+    var searchLocation = $('#location-input').val().trim();
     var searchDateUnformatted = $('#date-input').val().trim();  //value received from user input
-    var inputDate = dayjs(searchDateUnformatted).format('YYYY-MM-DD');  // user input reformatted to ticketmaster required format using dayjs
-    var inputEndDate = (dayjs(inputDate).add(1, 'day')).format('YYYY-MM-DD'); // user input + 1 day using dayjs
+    var ticketmasterStartDate = dayjs(searchDateUnformatted).format('YYYY-MM-DD');  // user input reformatted to ticketmaster required format using dayjs
+    var ticketmasterEndDate = (dayjs(ticketmasterStartDate).add(1, 'day')).format('YYYY-MM-DD'); // user input + 1 day using dayjs
     
-    savedLocations.push(cityName);
-    savedDates.push(inputDate);
-  
-
+    savedLocations.push(searchLocation);
+    savedDates.push(ticketmasterStartDate);
     $("#location-input").val('');
     $("#date-input").val('');
     
-   localStorage.setItem('savedLocations', JSON.stringify(savedLocations));
-   localStorage.setItem('save-dates', JSON.stringify(savedDates));
+    localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
+    localStorage.setItem("savedDates", JSON.stringify(savedDates));
     
-  
-
-
-
-
-
-    clearSearchResults();
+    
+    
+    
     renderSaved();
-    
-    getTicketMaster(cityName, inputDate, inputEndDate);
-    getBreweries(cityName);
-    // getAirbnb(cityName, inputDate, inputEndDate);
+    clearSearchResults();
+    getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
+    getBreweries(searchLocation);
+    getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 
 });
 
-function renderSaved () {
-        $('#search-history').empty();
+function renderSaved(){
+  $('#search-history').empty();
 
-        for (var i=0; i< savedLocations.length; i++) {
-              var locBtn = $('<button>');
-              locBtn.addClass('saved-search-button');
-              locBtn.attr('saved-location', savedLocations[i]);
-              locBtn.attr('saved-date', savedDates[i]);
-              locBtn.text(savedLocations[i]);
-
-              
-              
-            $('#search-history').append(locBtn);
-        
-        }
-      };
-
-
-// function to render data from search history button
-
-function displaySearchHistory () {
-  
-
-    var savedCityName = $(this).attr('saved-location');
-    var tempDate = $(this).attr('saved-date');
-    var savedDate = dayjs(tempDate).format('YYYY-MM-DD');
-    var defaultEndDate = (dayjs(savedDate).add(1, 'day')).format('YYYY-MM-DD');
-
-    console.log(savedCityName)
-    console.log(savedDate)
-    console.log(defaultEndDate)
-
-    // clearSearchResults();
-    // getTicketMaster(savedCityName, savedDate, defaultEndDate);
-    // getBreweries(savedCityName);
-    // getAirbnb(savedCityName, savedDate, defaultEndDate);
+  for (var i=0; i< savedLocations.length; i++) {
+      var locBtn = $('<button>');
+      locBtn.addClass('saved-search-button');
+      locBtn.attr({
+        'saved': savedLocations[i],
+        'saved-date': savedDates[i],
+        });
+      locBtn.text(savedLocations[i]);
+      $('#search-history').append(locBtn);
+  }
 
 };
-  
+
+function displaySearchHistory () {
+
+  var savedCityName = $(this).attr('saved');
+  var tempDate = $(this).attr('saved-date');
+  var savedDate = dayjs(tempDate).format('YYYY-MM-DD');
+  var defaultEndDate = (dayjs(savedDate).add(1, 'day')).format('YYYY-MM-DD');
+
+  console.log(savedCityName)
+  console.log(savedDate)
+  console.log(defaultEndDate)
+
+  clearSearchResults();
+  getTicketMaster(savedCityName, savedDate, defaultEndDate);
+  getBreweries(savedCityName);
+  getAirbnb(savedCityName, savedDate, defaultEndDate);
+
+};
 
 // function to render data received from Ticketmaster API onto cards
 
@@ -122,7 +109,6 @@ function getTicketMaster(location, startDate, endDate) {
           }
           ticketmasterEl.append(`
             
-              <div class="col s6 m3 l2">
               <div class="col s6 m3 l2 id="ticketmaster-div">
                 <div class="card small hoverable ticketmaster-card">
                   <div class="card-image">
@@ -205,12 +191,18 @@ function clearSearchResults() {
     }
   };
   var airbnbUrl = "https://airbnb13.p.rapidapi.com/search-location?location=" + location + "&checkin=" + checkInDate + "&checkout=" + checkOutDate + "&adults=1&children=0&infants=0&page=1"
+
+
   fetch(airbnbUrl, settings) 
     .then(function(response){
       return response.json()
     })
     .then(function(data) {
       console.log(data);
+      airbnbEl.append(`
+        <h2> Airbnb Listings </h2>
+      `)
+
       for (var i = 0; i < 6; i++) {
         var listingName = data.results[i].name;
         var listingAddress = data.results[i].address;
@@ -222,12 +214,11 @@ function clearSearchResults() {
 
         airbnbEl.append(`
         <div class="col s6 m3 l2">
-          <h3>Airbnb Listings</h3>
-        <div class="card small hoverable airbnb-card">
+        <div class="card medium hoverable airbnb-card">
           <div class="card-image">
             <img src=${listingImg}>
           </div>
-          <div class="listing-content">
+          <div class="card-content">
             <p>${listingName}</p>
             <div>
               <p>Address: ${listingAddress}</p>
@@ -247,18 +238,5 @@ function clearSearchResults() {
     .catch(err => console.error(err));
     } 
 
-
-    $(document).on('click', '.saved-search-button', displaySearchHistory);
-   // const options = {
-    //  method: 'GET',
-     // headers: {
-      //  'X-RapidAPI-Key': 'e73ae1a52emsh2147aac4621d516p126b65jsn4b4561360052',
-      //  'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
-    //  }
-   // };
-    
-   // fetch('https://travel-advisor.p.rapidapi.com/locations/v2/auto-complete?query=Paris&lang=en_US&units=km', options)
-    //  .then(response => response.json())
-    //  .then(response => console.log(response))
-    //  .catch(err => console.error(err));
   
+   $(document).on('click', '.saved-search-button', displaySearchHistory);
