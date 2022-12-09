@@ -65,8 +65,13 @@ function getTicketMaster(location, startDate, endDate) {
           var ticketsUrl = data._embedded.events[i].url;
           var eventDate = dayjs(data._embedded.events[i].dates.start.localDate).format('MMM DD YYYY');
           var eventTime = data._embedded.events[i].dates.start.localTime;
-          console.log(eventTime);
-
+          var eventHour = parseInt(eventTime.slice(0 , 2));
+          var eventMinutes = eventTime.slice(-5, -3);
+          if (eventHour > 12) {
+            eventTime = (eventHour - 12) + ":" + eventMinutes + " PM";
+          } else {
+            eventTime = eventHour + ":" + eventMinutes + " AM";
+          }
           ticketmasterEl.append(`
             
               <div class="col s6 m3 l2">
@@ -113,9 +118,13 @@ function clearSearchResults() {
           var breweryName = data[i].name;
           var breweryLocation = data[i].street + " " + data[i].city + ", " + data[i].state;
           var breweryUrl = data[i].website_url;
-          var breweryUrlAdj = breweryUrl.slice(0, 4) + "s" + breweryUrl.slice(4);
+          var breweryUrlAdj;
           var breweryPhone = data[i].phone;
-          console.log(breweryUrlAdj);
+          if (breweryUrl === null) {
+            breweryUrlAdj = "No website available.";
+          } else {
+            var breweryUrlAdj = breweryUrl.slice(0, 4) + "s" + breweryUrl.slice(4);
+          }
           breweryEl.append(`
               <ul>
                 <li class="brewery-names">${breweryName + ", Address: " + breweryLocation + ", Phone: " + breweryPhone + ", url: " + "<a href=" + breweryUrlAdj + ">" + breweryUrlAdj + "</a>"}</li>
