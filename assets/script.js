@@ -15,7 +15,6 @@ $('#search-location').on('click', function(event){
     var ticketmasterStartDate = dayjs(searchDateUnformatted).format('YYYY-MM-DD');  // user input reformatted to ticketmaster required format using dayjs
     var ticketmasterEndDate = (dayjs(ticketmasterStartDate).add(1, 'day')).format('YYYY-MM-DD'); // user input + 1 day using dayjs
     
-
     savedLocations.push(searchLocation);
 
     $("#location-input").val('');
@@ -40,7 +39,7 @@ $('#search-location').on('click', function(event){
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
     getBreweries(searchLocation);
-    getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
+    //getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 
 });
 
@@ -65,7 +64,9 @@ function getTicketMaster(location, startDate, endDate) {
           var eventImage = data._embedded.events[i].images[0].url;
           var ticketsUrl = data._embedded.events[i].url;
           var eventDate = dayjs(data._embedded.events[i].dates.start.localDate).format('MMM DD YYYY');
-          var eventTime = data._embedded.events[i].dates.start.localTime
+          var eventTime = data._embedded.events[i].dates.start.localTime;
+          console.log(eventTime);
+
           ticketmasterEl.append(`
             
               <div class="col s6 m3 l2">
@@ -112,9 +113,9 @@ function clearSearchResults() {
           var breweryName = data[i].name;
           var breweryLocation = data[i].street + " " + data[i].city + ", " + data[i].state;
           var breweryUrl = data[i].website_url;
-          var breweryUrlAdj = breweryUrl.slice(0,4) + "s" + breweryUrl.slice(4);
+          var breweryUrlAdj = breweryUrl.slice(0, 4) + "s" + breweryUrl.slice(4);
           var breweryPhone = data[i].phone;
-          
+          console.log(breweryUrlAdj);
           breweryEl.append(`
               <ul>
                 <li class="brewery-names">${breweryName + ", Address: " + breweryLocation + ", Phone: " + breweryPhone + ", url: " + "<a href=" + breweryUrlAdj + ">" + breweryUrlAdj + "</a>"}</li>
