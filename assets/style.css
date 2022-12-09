@@ -21,7 +21,6 @@ body {
   font-size: 16px;
 }
 
-<<<<<<< HEAD
 
 
 h1,
@@ -30,10 +29,8 @@ h3,
 h4,
 h5,
 h6 {
-=======
 h1, h2, h3
 {
->>>>>>> main
   font-weight: 700;
   margin: 0;
   color: var(--dark);
@@ -56,10 +53,7 @@ main {
 
 .btn {
   font-size: 1.3rem;
-<<<<<<< HEAD
   text-decoration: none;
-=======
->>>>>>> main
   justify-content: center;
   padding: 6px 5px;
   width: 100%;
@@ -72,7 +66,6 @@ main {
   transform: translate(-1px, -1px);
 }
 
-<<<<<<< HEAD
 .btn:hover {
   color: var(--primary);
   background-color: var(--tertiary);
@@ -80,14 +73,11 @@ main {
   box-shadow: 2px 2px var(--dark);
 }
 
-=======
->>>>>>> main
 .btn-inline {
   display: inline;
 }
 
-<<<<<<< HEAD
-/* .btn-back {
+.btn-back {
   border-radius: var(--border-radius);
   color: var(--primary);
   border: none;
@@ -101,7 +91,7 @@ main {
   padding: 15px;
   text-decoration: none;
   font-size: 1.2rem;
-} */
+}
 
 /* .btn-back:hover {
   color: var(--primary);
@@ -110,8 +100,6 @@ main {
   box-shadow: 2px 2px var(--dark);
 } */
 
-=======
->>>>>>> main
 .hero {
   padding: 3% 4%;
   background-color: var(--dark);
@@ -135,7 +123,6 @@ main {
   box-shadow: 8px 6px var(--light-dark);
 }
 
-<<<<<<< HEAD
 .list-group {
   padding: 0;
   list-style: none;
@@ -170,8 +157,6 @@ main {
 } */
 
 /* CARDS */
-=======
->>>>>>> main
 .card {
   margin: 0 0 20px 0;
   border: 3px solid var(--dark);
@@ -189,7 +174,6 @@ main {
   padding: 4%;
 }
 
-<<<<<<< HEAD
 FORM
 .form-label,
 .form-input,
@@ -212,10 +196,8 @@ FORM
 }
 
 HEIGHT / WIDTH UTILS 
- .min-100-vh {
-=======
+ .min-100-vh 
 .min-100-vh {
->>>>>>> main
   min-height: 100vh;
 }
 
@@ -223,10 +205,7 @@ HEIGHT / WIDTH UTILS
   min-width: 100vw;
 } 
 
-<<<<<<< HEAD
  FONT UTILS 
-=======
->>>>>>> main
 .text-uppercase {
   text-transform: uppercase;
 } 
@@ -534,19 +513,14 @@ HEIGHT / WIDTH UTILS
 
 @keyframes moveImgRight {
   0% {
-<<<<<<< HEAD
     transform: translateX(-300%) translateY(-65%);
-=======
   transform: translateX(-375%) translateY(-65%);
->>>>>>> main
   }
 
   100% {
-<<<<<<< HEAD
     transform: translateX(300%) translateY(-65%);
   }
 }
-=======
   transform: translateX(375%) translateY(-65%);
   }
 }
@@ -573,4 +547,3 @@ HEIGHT / WIDTH UTILS
     transform: rotateY(360deg);
   }
 }
->>>>>>> main
