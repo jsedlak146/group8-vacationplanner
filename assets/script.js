@@ -107,7 +107,7 @@ function getTicketMaster(location, startDate, endDate) {
         ticketmasterEl.append(`
            <h2>🎫Local Events🎟</h2>
         `);
-        for (var i = 0; i < 6; i++) {
+        for (var i = 0; i < data._embedded.events.length; i++) {
           var eventName = data._embedded.events[i].name;
           var eventImage = data._embedded.events[i].images[0].url;
           var ticketsUrl = data._embedded.events[i].url;
@@ -123,6 +123,7 @@ function getTicketMaster(location, startDate, endDate) {
           ticketmasterEl.append(`
             
               <div class="col s6 m3 l2">
+              <div class="col s6 m3 l2 id="ticketmaster-div">
                 <div class="card small hoverable ticketmaster-card">
                   <div class="card-image">
                     <img src=${eventImage}>
@@ -140,6 +141,17 @@ function getTicketMaster(location, startDate, endDate) {
           
           `);
         };
+        ticketmasterEl.append(`
+        <span id="ticketmaster-span">show more...</span>
+        `);
+        $(function () {
+          $('#ticketmaster-span').click(function () {
+              $('#ticketmaster div:hidden').slice(0, 30).show();
+              if ($('#ticketmaster div').length == $('#ticketmaster div:visible').length) {
+                  $('#ticketmaster-span').hide();
+              }
+          });
+      });
     })
 }
 
@@ -233,7 +245,8 @@ function clearSearchResults() {
       }
     })
     .catch(err => console.error(err));
-    }
+    } 
+
 
     $(document).on('click', '.saved-search-button', displaySearchHistory);
    // const options = {
