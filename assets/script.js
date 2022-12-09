@@ -39,7 +39,7 @@ $('#search-location').on('click', function(event){
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
     getBreweries(searchLocation);
-    //getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
+    getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 
 });
 
@@ -144,13 +144,6 @@ function clearSearchResults() {
     }
   };
   var airbnbUrl = "https://airbnb13.p.rapidapi.com/search-location?location=" + location + "&checkin=" + checkInDate + "&checkout=" + checkOutDate + "&adults=1&children=0&infants=0&page=1"
-  // 'https://airbnb13.p.rapidapi.com/search-location?location=Paris&checkin=2023-02-16&checkout=2023-02-17&adults=1&children=0&infants=0&page=1'
-  
-  // var location = $('#location-input').val().trim();
-  // var unformattedDate = $('#date-input').val().trim();
-  // var checkInDate = dayjs(unformattedDate).format('YYYY-MM-DD');
-  // var checkOutDate = (dayjs(checkInDate).add(1, 'day')).format('YYYY-MM-DD');
-
   fetch(airbnbUrl, settings) 
     .then(function(response){
       return response.json()
