@@ -526,3 +526,16 @@ p {
   font-size: 1em;
 }
 
+.ticketmaster-card,
+.airbnb-card {
+  animation: spin 3s;
+}
+
+@keyframes spin {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
