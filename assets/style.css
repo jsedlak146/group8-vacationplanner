@@ -27,6 +27,7 @@ h1, h2, h3
   margin: 0;
   color: var(--dark);
   line-height: 1.25;
+  text-align: center;
 }
 
 main {
@@ -42,14 +43,13 @@ p {
   font-size: 1.3rem;
   justify-content: center;
   padding: 6px 5px;
-  width: 100%;
+  width: 80%;
   display: block;
-  margin: 5px 0;
+  margin: 5px auto 8px auto;
   border-radius: var(--border-radius);
   color: var(--primary);
   background-color: var(--light-dark);
   box-shadow: 3px 3px var(--dark);
-  transform: translate(-1px, -1px);
 }
 
 .btn-inline {
@@ -64,7 +64,6 @@ p {
 }
 
 .hero p {
-  max-width: 90%;
   text-align: center;
 }
 
@@ -83,6 +82,7 @@ p {
   margin: 0 0 20px 0;
   border: 3px solid var(--dark);
   border-radius: var(--border-radius);
+  align-items: center;
 }
 
 .card-header {
@@ -403,22 +403,26 @@ p {
 }
 
 #plane {
-  width: 15%;
+  width: 12%;
   animation: moveImgRight 5s ease-out infinite;
   position: absolute;
 }
 
 @keyframes moveImgRight{
   0% {
-  transform: translateX(-375%) translateY(-65%);
+  transform: translateX(-450%) translateY(-50%);
   }
   100% {
-  transform: translateX(375%) translateY(-65%);
+  transform: translateX(450%) translateY(-50%);
   }
 }
 
 #breweries h2 {
   font-size: 3em;
+}
+
+#breweries ul {
+  text-align: center;
 }
 
 .brewery-names {
@@ -460,3 +464,63 @@ p {
 .airbnb-card .card-image {
   height: 40%;
 }
+
+.searchBox #location-input {
+  width: 85%;
+  margin-left: 25px;
+}
+
+.searchBox #date-input {
+  width: 85%;
+  margin-left: 25px;
+}
+
+#search-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+#search-location {
+  width: 60%;
+  text-align: center;
+}
+
+.saved-search-button {
+  margin: 3px;
+  border-color: var(--dark);
+  border-width: 1px;
+  border-radius: 25px;
+  background-color: var(--primary);
+  color: var(--tertiary);
+}
+  
+.saved-search-button:hover {
+  font-weight: bolder;
+  border-color: #26a69a;
+  background-color: #26a69a;
+  color: #fff;
+  cursor: pointer;
+}
+
+#clear-search {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.clear-search-button {
+  border-width: 2px;
+  background-color: #fff;
+}
+
+.clear-search-button:hover {
+  background-color: black;
+  color: #fff;
+}
+
+hr {
+  width: 80%;
+  color: var(--dark);
+}
+
