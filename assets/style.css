@@ -42,14 +42,13 @@ p {
   font-size: 1.3rem;
   justify-content: center;
   padding: 6px 5px;
-  width: 100%;
+  width: 80%;
   display: block;
-  margin: 5px 0;
+  margin: 5px auto 8px auto;
   border-radius: var(--border-radius);
   color: var(--primary);
   background-color: var(--light-dark);
   box-shadow: 3px 3px var(--dark);
-  transform: translate(-1px, -1px);
 }
 
 .btn-inline {
@@ -64,7 +63,10 @@ p {
 }
 
 .hero p {
+<<<<<<< HEAD
   
+=======
+>>>>>>> main
   text-align: center;
 }
 
@@ -83,6 +85,7 @@ p {
   margin: 0 0 20px 0;
   border: 3px solid var(--dark);
   border-radius: var(--border-radius);
+  align-items: center;
 }
 
 .card-header {
@@ -403,17 +406,17 @@ p {
 }
 
 #plane {
-  width: 15%;
+  width: 12%;
   animation: moveImgRight 5s ease-out infinite;
   position: absolute;
 }
 
 @keyframes moveImgRight{
   0% {
-  transform: translateX(-375%) translateY(-65%);
+  transform: translateX(-450%) translateY(-50%);
   }
   100% {
-  transform: translateX(375%) translateY(-65%);
+  transform: translateX(450%) translateY(-50%);
   }
 }
 
