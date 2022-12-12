@@ -43,12 +43,11 @@ $('#search-location').on('click', function(event){
     localStorage.setItem("savedDates", JSON.stringify(savedDates));
     //renders buttons for previously saved locations/dates, clears previous search results from screen and renders new search results from the 3 API's.
 
-    
     renderSaved();
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
     getBreweries(searchLocation);
-    //getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
+    getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 });
 
 //function for rendering buttons for previously searched locations/dates.
@@ -82,7 +81,7 @@ function displaySearchHistory () {
   clearSearchResults();
   getTicketMaster(savedCityName, savedDate, defaultEndDate);
   getBreweries(savedCityName);
-  //getAirbnb(savedCityName, savedDate, defaultEndDate);
+  getAirbnb(savedCityName, savedDate, defaultEndDate);
 
 };
 
@@ -251,3 +250,10 @@ function clearSearchResults() {
 
   // 'click' event listener added to buttons which will call the function for rendering data from previous searches
    $(document).on('click', '.saved-search-button', displaySearchHistory);
+
+   // Materialize 'datepicker' - allows datepicker calendar to pop-up when user clicks on date box
+   
+   $(document).ready(function(){
+    $('.datepicker').datepicker();
+  });
+          
