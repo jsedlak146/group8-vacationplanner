@@ -10,6 +10,7 @@ var sideNav = document.querySelector(".sidenav");
   M.Sidenav.init(sideNav, {});
   
 renderSaved();
+clearSearchHistory();
 
 function getLocalStorage() {
   return JSON.parse(localStorage.getItem("savedLocations")) || [];
@@ -40,7 +41,7 @@ $('#search-location').on('click', function(event){
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
     getBreweries(searchLocation);
-    getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
+    // getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 
 });
 
@@ -74,10 +75,28 @@ function displaySearchHistory () {
   clearSearchResults();
   getTicketMaster(savedCityName, savedDate, defaultEndDate);
   getBreweries(savedCityName);
-  getAirbnb(savedCityName, savedDate, defaultEndDate);
+  // getAirbnb(savedCityName, savedDate, defaultEndDate);
 
 };
 
+// clear search history button
+
+function clearSearchHistory() {
+  var clearBtn = $('<button>');
+  clearBtn.addClass('clear-search-button');
+  clearBtn.text('Clear Searches');
+
+  $(clearBtn).on('click', function(event) {
+    event.preventDefault();
+    window.localStorage.clear();
+    $('#search-history').empty();
+    
+    savedLocations = [];
+
+  });
+
+  $('#clear-search').append(clearBtn)
+}
 // function to render data received from Ticketmaster API onto cards
 
 function getTicketMaster(location, startDate, endDate) {

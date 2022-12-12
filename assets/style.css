@@ -64,7 +64,7 @@ p {
 }
 
 .hero p {
-  max-width: 90%;
+  
   text-align: center;
 }
 
@@ -460,3 +460,58 @@ p {
 .airbnb-card .card-image {
   height: 40%;
 }
+
+.searchBox #location-input {
+  width: 85%;
+  margin-left: 25px;
+}
+
+.searchBox #date-input {
+  width: 85%;
+  margin-left: 25px;
+}
+
+#search-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+#search-location {
+  width: 60%;
+  text-align: center;
+}
+
+.saved-search-button {
+  margin: 3px;
+  border-color: var(--dark);
+  border-width: 1px;
+  border-radius: 25px;
+  background-color: var(--primary);
+  color: var(--tertiary);
+}
+  
+.saved-search-button:hover {
+  font-weight: bolder;
+  border-width: 0;
+  background-color: #26a69a;
+  color: #fff;
+  cursor: pointer;
+}
+
+#clear-search {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.clear-search-button {
+  border-width: 2px;
+  background-color: #fff;
+}
+
+hr {
+  width: 80%;
+  color: var(--dark);
+}
+
