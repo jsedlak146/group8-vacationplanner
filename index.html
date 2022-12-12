@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <script src="https://kit.fontawesome.com/c193fe932c.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="./assets/style.css" />
 
@@ -63,12 +62,8 @@
   </ul>
 
   <header class="hero">
-    <h1 class="app-title"><i class="vaca-planner"></i> Vacation Planner!</h1>
-    <p class="header-p">Lost in a new city? Don't know where to go? Not to worry, just search below
-
-    <h1 class="app-title"><i class="vaca-planner"></i> The git Vacation Planner</h1>
-    <p>Lost in a new city? Don't know where to go? Not to worry, just search below!
-    </p>
+    <h1 class="app-title"><i class="vaca-planner"></i>Vacation Planner!</h1>
+    <p>Lost in a new city? Don't know where to go? Not to worry, just search below!</p>
     <img src="./plane.png" id="plane">
   </header>
 
@@ -83,12 +78,10 @@
         <form id="where">
           <label for="location-input"></label>
           <input type="text" id="location-input" placeholder="Ex. New York City">
-          <input type="text" id="date-input" placeholder="Ex. 01/01/2022">
-          <br>
-          <input type="submit" value="Search" id="search-location">
+          <input class="datepicker" type="text" id="date-input" placeholder="Ex. 01/01/2022">
+         
+          <button type="submit" class="btn bg-danger waves-effect waves-light" id="search-location">Search</button>
         </form>
-          <input type="submit" class="btn bg-danger" value="Search" id="search-location">
-      </form>
       </div>
 
       <div class="card">
@@ -103,24 +96,15 @@
     <div class="row" id="airbnb"></div>
 
     <div class="row" id="ticketmaster"></div>
-    <div class = "row" id="ticketmaster"></div>
     
     <div id="breweries"></div>
 
-    <div class="col-12 col-md-8">
-      <h2 class="subtitle"><span id="repo-search-term"></span></h2>
-      <div id="results-container" class="list-group"></div>
-
-      <div class="row">
-
-      </div>
-    </div>
   </main>
   <footer class="page-footer grey darken-3">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
-          <h5 class="white-text">Vcation Planner</h5>
+          <h5 class="white-text">Vacation Planner</h5>
           <p class="grey-text text-lighten-4">Once a year, go somewhere you have never been before
           </p>
         </div>
@@ -144,7 +128,6 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
     integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

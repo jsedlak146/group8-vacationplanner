@@ -42,14 +42,13 @@ p {
   font-size: 1.3rem;
   justify-content: center;
   padding: 6px 5px;
-  width: 100%;
+  width: 80%;
   display: block;
-  margin: 5px 0;
+  margin: 5px auto 8px auto;
   border-radius: var(--border-radius);
   color: var(--primary);
   background-color: var(--light-dark);
   box-shadow: 3px 3px var(--dark);
-  transform: translate(-1px, -1px);
 }
 
 .btn-inline {
@@ -459,4 +458,8 @@ p {
 
 .airbnb-card .card-image {
   height: 40%;
+}
+
+button {
+  margin: 2px;
 }
