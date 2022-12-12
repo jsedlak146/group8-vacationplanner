@@ -5,6 +5,7 @@ var ticketmasterEl = $("#ticketmaster");
 var breweryEl = $("#breweries");
 var airbnbEl = $("#airbnb");
 
+
 var sideNav = document.querySelector(".sidenav");
   M.Sidenav.init(sideNav, {});
   
@@ -33,7 +34,7 @@ $('#search-location').on('click', function(event){
     
     localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
     localStorage.setItem("savedDates", JSON.stringify(savedDates));
-    
+
     
     renderSaved();
     clearSearchResults();
