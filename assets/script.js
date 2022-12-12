@@ -93,6 +93,7 @@ function getTicketMaster(location, startDate, endDate) {
         console.log((data));
         ticketmasterEl.append(`
            <h2>🎫Local Events🎟</h2>
+           <br>
         `);
         for (var i = 0; i < data._embedded.events.length; i++) {
           var eventName = data._embedded.events[i].name;
@@ -160,6 +161,7 @@ function clearSearchResults() {
         console.log((data));
         breweryEl.append(`
            <h2>🍺Local Breweries🍺</h2>
+           <br>
         `);
         for (var i = 0; i < data.length; i++) {
           var breweryName = data[i].name;
@@ -201,6 +203,7 @@ function clearSearchResults() {
       console.log(data);
       airbnbEl.append(`
         <h2> Airbnb Listings </h2>
+        <br>
       `)
 
       for (var i = 0; i < 6; i++) {
