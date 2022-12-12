@@ -9,41 +9,13 @@ var ticketmasterEl = $("#ticketmaster");
 var breweryEl = $("#breweries");
 var airbnbEl = $("#airbnb");
 
-var sideNav = document.querySelector(".sidenav");
-M.Sidenav.init(sideNav, {});
-
-var ss = document.querySelectorAll('.scrollspy');
-M.ScrollSpy.init(ss, {});
-
-renderSaved();
-
-function getLocalStorage() {
-  return JSON.parse(localStorage.getItem("savedLocations")) || [];
-};
-
-function getLocalStorageDate() {
-  return JSON.parse(localStorage.getItem('savedDates')) || [];
-};
-
-$('#search-location').on('click', function (event) {
-  event.preventDefault();
-
-  var searchLocation = $('#location-input').val().trim();
-  var searchDateUnformatted = $('#date-input').val().trim();  //value received from user input
-  var ticketmasterStartDate = dayjs(searchDateUnformatted).format('YYYY-MM-DD');  // user input reformatted to ticketmaster required format using dayjs
-  var ticketmasterEndDate = (dayjs(ticketmasterStartDate).add(1, 'day')).format('YYYY-MM-DD'); // user input + 1 day using dayjs
-
-  savedLocations.push(searchLocation);
-  savedDates.push(ticketmasterStartDate);
-  $("#location-input").val('');
-  $("#date-input").val('');
-
-  localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
-  localStorage.setItem("savedDates", JSON.stringify(savedDates));
 // function call to render buttons for previously saved locations/dates.
 
 var sideNav = document.querySelector(".sidenav");
   M.Sidenav.init(sideNav, {});
+
+  var ss = document.querySelectorAll('.scrollspy');
+M.ScrollSpy.init(ss, {});
   
 renderSaved();
 clearSearchHistory();
@@ -310,4 +282,5 @@ function clearSearchResults() {
    $(document).ready(function(){
     $('.datepicker').datepicker();
   });
-          
+        
+

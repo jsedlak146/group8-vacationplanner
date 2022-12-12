@@ -57,28 +57,14 @@ p {
 }
 
 .hero {
-  display: flex;
   padding: 3% 4%;
   background-color: var(--dark);
   color: var(--primary);
   text-align: center;
-  
-  
+   
 }
-
- .hero-title {
-  display: block; 
-  align-items: center;
-  justify-content: center;
-
  
-} 
-
 .hero p {
-<<<<<<< HEAD
-  /* max-width: 90%; */
-=======
->>>>>>> main
   text-align: center;
 }
 
