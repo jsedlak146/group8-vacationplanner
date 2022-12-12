@@ -460,3 +460,7 @@ p {
 .airbnb-card .card-image {
   height: 40%;
 }
+
+button {
+  margin: 2px;
+}
