@@ -1,6 +1,8 @@
 var savedLocations = getLocalStorage();
 var savedDates = getLocalStorageDate();
 
+
+
 var ticketmasterEl = $("#ticketmaster");
 var breweryEl = $("#breweries");
 var airbnbEl = $("#airbnb");
@@ -36,33 +38,60 @@ $('#search-location').on('click', function (event) {
 
   localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
   localStorage.setItem("savedDates", JSON.stringify(savedDates));
+renderSaved();
 
+function getLocalStorage() {
+  return JSON.parse(localStorage.getItem("savedLocations")) || [];
+};
 
-  renderSaved();
-  clearSearchResults();
-  getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
-  getBreweries(searchLocation);
-  getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
+function getLocalStorageDate() {
+  return JSON.parse(localStorage.getItem('savedDates')) || [];
+};
+
+$('#search-location').on('click', function(event){
+    event.preventDefault();
+
+    var searchLocation = $('#location-input').val().trim();
+    var searchDateUnformatted = $('#date-input').val().trim();  //value received from user input
+    var ticketmasterStartDate = dayjs(searchDateUnformatted).format('YYYY-MM-DD');  // user input reformatted to ticketmaster required format using dayjs
+    var ticketmasterEndDate = (dayjs(ticketmasterStartDate).add(1, 'day')).format('YYYY-MM-DD'); // user input + 1 day using dayjs
+    
+    savedLocations.push(searchLocation);
+    savedDates.push(ticketmasterStartDate);
+    $("#location-input").val('');
+    $("#date-input").val('');
+    
+    localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
+    localStorage.setItem("savedDates", JSON.stringify(savedDates));
+    
+    
+    
+    
+    renderSaved();
+    clearSearchResults();
+    getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
+    getBreweries(searchLocation);
+    getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 
 });
 
-function renderSaved() {
+function renderSaved(){
   $('#search-history').empty();
 
-  for (var i = 0; i < savedLocations.length; i++) {
-    var locBtn = $('<button>');
-    locBtn.addClass('saved-search-button');
-    locBtn.attr({
-      'saved': savedLocations[i],
-      'saved-date': savedDates[i],
-    });
-    locBtn.text(savedLocations[i]);
-    $('#search-history').append(locBtn);
+  for (var i=0; i< savedLocations.length; i++) {
+      var locBtn = $('<button>');
+      locBtn.addClass('saved-search-button');
+      locBtn.attr({
+        'saved': savedLocations[i],
+        'saved-date': savedDates[i],
+        });
+      locBtn.text(savedLocations[i]);
+      $('#search-history').append(locBtn);
   }
 
 };
 
-function displaySearchHistory() {
+function displaySearchHistory () {
 
   var savedCityName = $(this).attr('saved');
   var tempDate = $(this).attr('saved-date');
@@ -96,20 +125,20 @@ function getTicketMaster(location, startDate, endDate) {
       ticketmasterEl.append(`
            <h2>🎫Local Events🎟</h2>
         `);
-      for (var i = 0; i < data._embedded.events.length; i++) {
-        var eventName = data._embedded.events[i].name;
-        var eventImage = data._embedded.events[i].images[0].url;
-        var ticketsUrl = data._embedded.events[i].url;
-        var eventDate = dayjs(data._embedded.events[i].dates.start.localDate).format('MMM DD YYYY');
-        var eventTime = data._embedded.events[i].dates.start.localTime;
-        var eventHour = parseInt(eventTime.slice(0, 2));
-        var eventMinutes = eventTime.slice(-5, -3);
-        if (eventHour > 12) {
-          eventTime = (eventHour - 12) + ":" + eventMinutes + " PM";
-        } else {
-          eventTime = eventHour + ":" + eventMinutes + " AM";
-        }
-        ticketmasterEl.append(`
+        for (var i = 0; i < data._embedded.events.length; i++) {
+          var eventName = data._embedded.events[i].name;
+          var eventImage = data._embedded.events[i].images[0].url;
+          var ticketsUrl = data._embedded.events[i].url;
+          var eventDate = dayjs(data._embedded.events[i].dates.start.localDate).format('MMM DD YYYY');
+          var eventTime = data._embedded.events[i].dates.start.localTime;
+          var eventHour = parseInt(eventTime.slice(0 , 2));
+          var eventMinutes = eventTime.slice(-5, -3);
+          if (eventHour > 12) {
+            eventTime = (eventHour - 12) + ":" + eventMinutes + " PM";
+          } else {
+            eventTime = eventHour + ":" + eventMinutes + " AM";
+          }
+          ticketmasterEl.append(`
             
               <div class="col s6 m3 l2 id="ticketmaster-div">
                 <div class="card small hoverable ticketmaster-card">
@@ -128,17 +157,17 @@ function getTicketMaster(location, startDate, endDate) {
               </div>
           
           `);
-      };
-      ticketmasterEl.append(`
+        };
+        ticketmasterEl.append(`
         <span id="ticketmaster-span">show more...</span>
         `);
-      $(function () {
-        $('#ticketmaster-span').click(function () {
-          $('#ticketmaster div:hidden').slice(0, 30).show();
-          if ($('#ticketmaster div').length == $('#ticketmaster div:visible').length) {
-            $('#ticketmaster-span').hide();
-          }
-        });
+        $(function () {
+          $('#ticketmaster-span').click(function () {
+              $('#ticketmaster div:hidden').slice(0, 30).show();
+              if ($('#ticketmaster div').length == $('#ticketmaster div:visible').length) {
+                  $('#ticketmaster-span').hide();
+              }
+          });
       });
     })
 }
@@ -234,12 +263,12 @@ function getAirbnb(location, checkInDate, checkOutDate) {
           </div>
         </div>
       </div>
-        `)
+
+      `)
       }
     })
     .catch(err => console.error(err));
-}
+    } 
 
-
-$(document).on('click', '.saved-search-button', displaySearchHistory);
-
+  
+   $(document).on('click', '.saved-search-button', displaySearchHistory);
