@@ -21,14 +21,6 @@ body {
   font-size: 16px;
 }
 
-
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
 h1, h2, h3
 {
   font-weight: 700;
@@ -42,18 +34,12 @@ main {
   width: 90%;
 }
 
-
-.header-p {
-  font-size: 1.0rem;
-  position: absolute;
-  right: 28rem;
-  
-  
+p {
+  font-size: 1.2rem;
 }
 
-.btn {
+ .btn {
   font-size: 1.3rem;
-  text-decoration: none;
   justify-content: center;
   padding: 6px 5px;
   width: 100%;
@@ -66,39 +52,9 @@ main {
   transform: translate(-1px, -1px);
 }
 
-.btn:hover {
-  color: var(--primary);
-  background-color: var(--tertiary);
-  transform: translate(0, 0);
-  box-shadow: 2px 2px var(--dark);
-}
-
 .btn-inline {
   display: inline;
 }
-
-.btn-back {
-  border-radius: var(--border-radius);
-  color: var(--primary);
-  border: none;
-  outline: none;
-  background-color: var(--light-dark);
-  box-shadow: 3px 3px var(--secondary);
-  transform: translate(-1px, -1px);
-  display: inline-block;
-  width: auto;
-  margin-top: 20px;
-  padding: 15px;
-  text-decoration: none;
-  font-size: 1.2rem;
-}
-
-/* .btn-back:hover {
-  color: var(--primary);
-  background-color: var(--tertiary);
-  transform: translate(0, 0);
-  box-shadow: 2px 2px var(--dark);
-} */
 
 .hero {
   padding: 3% 4%;
@@ -123,40 +79,6 @@ main {
   box-shadow: 8px 6px var(--light-dark);
 }
 
-.list-group {
-  padding: 0;
-  list-style: none;
-}
-
-.list-item {
-  margin-bottom: 10px;
-  padding: 1.5%;
-  border-radius: var(--border-radius);
-  background-color: var(--light-dark);
-  color: var(--primary);
-  text-decoration: none;
-}
-
-/* .list-item:hover {
-  background-color: var(--dark);
-} */
-
-.status-icon {
-  padding: 2px 5px;
-  margin: 0 5px;
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: var(--border-radius);
-}
-
-/* .icon-danger {
-  color: rgb(255, 70, 70);
-} */
-
-/* .icon-success {
-  color: rgb(29, 153, 255);
-} */
-
-/* CARDS */
 .card {
   margin: 0 0 20px 0;
   border: 3px solid var(--dark);
@@ -174,41 +96,17 @@ main {
   padding: 4%;
 }
 
-FORM
-.form-label,
-.form-input,
-.form-textarea {
-  display: block;
-}
-
-.form-label {
-  font-size: 1.1rem;
-  margin: 0 0 0 5px;
-}
-
-.form-input {
-  width: 100%;
-  padding: 3%;
-  margin: 5px 0;
-  font-size: 1.2rem;
-  border: 2px solid var(--light-dark);
-  border-radius: var(--border-radius);
-}
-
-HEIGHT / WIDTH UTILS 
- .min-100-vh 
 .min-100-vh {
   min-height: 100vh;
 }
 
- .min-100-vw {
+.min-100-vw {
   min-width: 100vw;
-} 
+}
 
- FONT UTILS 
 .text-uppercase {
   text-transform: uppercase;
-} 
+}
 
 .flex-row {
   display: flex;
@@ -459,7 +357,6 @@ HEIGHT / WIDTH UTILS
   .col-xl-1 {
     flex: 0 0 calc(100% * 1 / 12 - 2%);
   }
-
   .col-xl-2 {
     flex: 0 0 calc(100% * 2 / 12 - 2%);
   }
@@ -511,16 +408,11 @@ HEIGHT / WIDTH UTILS
   position: absolute;
 }
 
-@keyframes moveImgRight {
+@keyframes moveImgRight{
   0% {
-    transform: translateX(-300%) translateY(-65%);
   transform: translateX(-375%) translateY(-65%);
   }
-
   100% {
-    transform: translateX(300%) translateY(-65%);
-  }
-}
   transform: translateX(375%) translateY(-65%);
   }
 }
@@ -546,4 +438,25 @@ HEIGHT / WIDTH UTILS
   to {
     transform: rotateY(360deg);
   }
+}
+
+.ticketmaster-card .card-content p {
+  font-size: 0.75em;
+}
+
+#ticketmaster div:nth-child(1n + 8) {
+  display: none;
+}
+
+#ticketmaster-span {
+  color: blue;
+  text-decoration: underline;
+}
+
+.airbnb-card .card-content p {
+  font-size: 0.75em;
+}
+
+.airbnb-card .card-image {
+  height: 40%;
 }

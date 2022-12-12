@@ -1,121 +1,99 @@
-
-var savedLocations = [];
-
+var savedLocations = getLocalStorage();
+var savedDates = getLocalStorageDate();
 
 var ticketmasterEl = $("#ticketmaster");
 var breweryEl = $("#breweries");
 var airbnbEl = $("#airbnb");
 
-const sideNav = document.querySelector(".sidenav");
+var sideNav = document.querySelector(".sidenav");
   M.Sidenav.init(sideNav, {});
   
+renderSaved();
 
-// $(document).ready(function() {
-//     $(".sidenav").sidenav();
-//   });
+function getLocalStorage() {
+  return JSON.parse(localStorage.getItem("savedLocations")) || [];
+};
 
-// $(document).ready(function(){
-//   $(".sidenav").sidenav();
-// });
+function getLocalStorageDate() {
+  return JSON.parse(localStorage.getItem('savedDates')) || [];
+};
 
+$('#search-location').on('click', function(event){
+    event.preventDefault();
 
-$('#search-location').on('click', function (event) {
-  event.preventDefault();
-
-  
-
-  var searchLocation = $('#location-input').val().trim();
-  var searchDateUnformatted = $('#date-input').val().trim();  //value received from user input
-  var ticketmasterStartDate = dayjs(searchDateUnformatted).format('YYYY-MM-DD');  // user input reformatted to ticketmaster required format using dayjs
-  var ticketmasterEndDate = (dayjs(ticketmasterStartDate).add(1, 'day')).format('YYYY-MM-DD'); // user input + 1 day using dayjs
-
-
-  savedLocations.push(searchLocation);
-
-  $("#location-input").val('');
-
-
-  localStorage.setItem("saved", savedLocations);
-  // console.log(savedLocations);
-
-  function renderSaved() {
-    $('#location-views').empty();
-
-    for (var i = 0; i < savedLocations.length; i++) {
-      var locBtn = $('<button>');
-      locBtn.addClass('saved-search-button');
-      locBtn.attr('saved', savedLocations[i]);
-      locBtn.text(savedLocations[i]);
-      $('#search-history').append(locBtn);
-    }
-  };
-
-  renderSaved();
-  clearSearchResults();
-  getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
     var searchLocation = $('#location-input').val().trim();
     var searchDateUnformatted = $('#date-input').val().trim();  //value received from user input
     var ticketmasterStartDate = dayjs(searchDateUnformatted).format('YYYY-MM-DD');  // user input reformatted to ticketmaster required format using dayjs
     var ticketmasterEndDate = (dayjs(ticketmasterStartDate).add(1, 'day')).format('YYYY-MM-DD'); // user input + 1 day using dayjs
     
     savedLocations.push(searchLocation);
-
+    savedDates.push(ticketmasterStartDate);
     $("#location-input").val('');
     $("#date-input").val('');
     
-    localStorage.setItem("saved", savedLocations);
-    // console.log(savedLocations);
+    localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
+    localStorage.setItem("savedDates", JSON.stringify(savedDates));
     
-    function renderSaved(){
-        $('#location-views').empty();
-    
-        for (var i=0; i< savedLocations.length; i++) {
-            var locBtn = $('<button>');
-            locBtn.addClass('saved-search-button');
-            locBtn.attr('saved', savedLocations[i]);
-            locBtn.text(savedLocations[i]);
-            $('#search-history').append(locBtn);
-        }
-    };
     
     renderSaved();
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
     getBreweries(searchLocation);
-    apiGet(method, searchLocation)
-    //getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
+    getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 
 });
 
+function renderSaved(){
+  $('#search-history').empty();
 
+  for (var i=0; i< savedLocations.length; i++) {
+      var locBtn = $('<button>');
+      locBtn.addClass('saved-search-button');
+      locBtn.attr({
+        'saved': savedLocations[i],
+        'saved-date': savedDates[i],
+        });
+      locBtn.text(savedLocations[i]);
+      $('#search-history').append(locBtn);
+  }
+
+};
+
+function displaySearchHistory () {
+
+  var savedCityName = $(this).attr('saved');
+  var tempDate = $(this).attr('saved-date');
+  var savedDate = dayjs(tempDate).format('YYYY-MM-DD');
+  var defaultEndDate = (dayjs(savedDate).add(1, 'day')).format('YYYY-MM-DD');
+
+  console.log(savedCityName)
+  console.log(savedDate)
+  console.log(defaultEndDate)
+
+  clearSearchResults();
+  getTicketMaster(savedCityName, savedDate, defaultEndDate);
+  getBreweries(savedCityName);
+  getAirbnb(savedCityName, savedDate, defaultEndDate);
+
+};
 
 // function to render data received from Ticketmaster API onto cards
 
 function getTicketMaster(location, startDate, endDate) {
   const apiKey = "FtEqYpIoWBFSbSArl0CV46XT95pYEReh";
-  const ticketMasterUrl = "https://app.ticketmaster.com/discovery/v2/events?apikey=" + apiKey + "&locale=*&startDateTime=" + startDate + "T11:10:00Z&endDateTime=" + endDate + "T11:11:00Z&city=" + location;
+  const ticketMasterUrl ="https://app.ticketmaster.com/discovery/v2/events?apikey=" + apiKey + "&locale=*&startDateTime=" + startDate + "T11:10:00Z&endDateTime=" + endDate + "T11:11:00Z&city=" + location;
   fetch(ticketMasterUrl)
-    .then(function (response) {
+    .then(function(response) {
 
       return response.json()
 
     })
-    .then(function (data) {
-      console.log((data));
-      for (var i = 0; i < data._embedded.events.length; i++) {
-        var eventName = data._embedded.events[i].name;
-        var eventImage = data._embedded.events[i].images[0].url;
-        var ticketsUrl = data._embedded.events[i].url;
-        var eventDate = dayjs(data._embedded.events[i].dates.start.localDate).format('MMM DD YYYY');
-        var eventTime = data._embedded.events[i].dates.start.localTime;
-
-        ticketmasterEl.append(`
     .then(function(data) {
         console.log((data));
         ticketmasterEl.append(`
            <h2>🎫Local Events🎟</h2>
         `);
-        for (var i = 0; i < 6; i++) {
+        for (var i = 0; i < data._embedded.events.length; i++) {
           var eventName = data._embedded.events[i].name;
           var eventImage = data._embedded.events[i].images[0].url;
           var ticketsUrl = data._embedded.events[i].url;
@@ -130,8 +108,8 @@ function getTicketMaster(location, startDate, endDate) {
           }
           ticketmasterEl.append(`
             
-              <div class="col s6 m3 l2">
-                <div class="card hoverable ticketmaster-card">
+              <div class="col s6 m3 l2 id="ticketmaster-div">
+                <div class="card small hoverable ticketmaster-card">
                   <div class="card-image">
                     <img src=${eventImage}>
                   </div>
@@ -147,18 +125,26 @@ function getTicketMaster(location, startDate, endDate) {
               </div>
           
           `);
-      };
+        };
+        ticketmasterEl.append(`
+        <span id="ticketmaster-span">show more...</span>
+        `);
+        $(function () {
+          $('#ticketmaster-span').click(function () {
+              $('#ticketmaster div:hidden').slice(0, 30).show();
+              if ($('#ticketmaster div').length == $('#ticketmaster div:visible').length) {
+                  $('#ticketmaster-span').hide();
+              }
+          });
+      });
     })
 }
 
 function clearSearchResults() {
+  airbnbEl.empty();
   ticketmasterEl.empty();
   breweryEl.empty();
 }
-
-
-
-
 
  function getBreweries(location) {
     
@@ -204,12 +190,7 @@ function clearSearchResults() {
     }
   };
   var airbnbUrl = "https://airbnb13.p.rapidapi.com/search-location?location=" + location + "&checkin=" + checkInDate + "&checkout=" + checkOutDate + "&adults=1&children=0&infants=0&page=1"
-  // 'https://airbnb13.p.rapidapi.com/search-location?location=Paris&checkin=2023-02-16&checkout=2023-02-17&adults=1&children=0&infants=0&page=1'
-  
-  // var location = $('#location-input').val().trim();
-  // var unformattedDate = $('#date-input').val().trim();
-  // var checkInDate = dayjs(unformattedDate).format('YYYY-MM-DD');
-  // var checkOutDate = (dayjs(checkInDate).add(1, 'day')).format('YYYY-MM-DD');
+
 
   fetch(airbnbUrl, settings) 
     .then(function(response){
@@ -217,6 +198,10 @@ function clearSearchResults() {
     })
     .then(function(data) {
       console.log(data);
+      airbnbEl.append(`
+        <h2> Airbnb Listings </h2>
+      `)
+
       for (var i = 0; i < 6; i++) {
         var listingName = data.results[i].name;
         var listingAddress = data.results[i].address;
@@ -228,12 +213,11 @@ function clearSearchResults() {
 
         airbnbEl.append(`
         <div class="col s6 m3 l2">
-          <h3>Airbnb Listings</h3>
-        <div class="card hoverable airbnb-card">
+        <div class="card medium hoverable airbnb-card">
           <div class="card-image">
             <img src=${listingImg}>
           </div>
-          <div class="listing-content">
+          <div class="card-content">
             <p>${listingName}</p>
             <div>
               <p>Address: ${listingAddress}</p>
@@ -247,23 +231,11 @@ function clearSearchResults() {
           </div>
         </div>
       </div>
-          
         `)
       }
     })
     .catch(err => console.error(err));
-    }
+    } 
 
-   // const options = {
-    //  method: 'GET',
-     // headers: {
-      //  'X-RapidAPI-Key': 'e73ae1a52emsh2147aac4621d516p126b65jsn4b4561360052',
-      //  'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
-    //  }
-   // };
-    
-   // fetch('https://travel-advisor.p.rapidapi.com/locations/v2/auto-complete?query=Paris&lang=en_US&units=km', options)
-    //  .then(response => response.json())
-    //  .then(response => console.log(response))
-    //  .catch(err => console.error(err));
   
+   $(document).on('click', '.saved-search-button', displaySearchHistory);
