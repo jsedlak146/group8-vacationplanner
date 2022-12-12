@@ -1,6 +1,10 @@
+/* variables for Local Storage - the savedLocations and savedDates will be used to enable user to easily go back
+to previously saved locations/dates */
 var savedLocations = getLocalStorage();
 var savedDates = getLocalStorageDate();
 
+/* variables to identify elements so that they can be updated dynamically as search results are pulled from the 
+3 API's used (TicketMaster, Open Brewery, and AirBnB) */
 var ticketmasterEl = $("#ticketmaster");
 var breweryEl = $("#breweries");
 var airbnbEl = $("#airbnb");
@@ -36,44 +40,49 @@ $('#search-location').on('click', function (event) {
 
   localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
   localStorage.setItem("savedDates", JSON.stringify(savedDates));
+// function call to render buttons for previously saved locations/dates.
 
 var sideNav = document.querySelector(".sidenav");
   M.Sidenav.init(sideNav, {});
   
 renderSaved();
+clearSearchHistory();
 
+// function to pull saved locations from Local Storage.
 function getLocalStorage() {
   return JSON.parse(localStorage.getItem("savedLocations")) || [];
 };
 
+// function to pull saved dates from Local Storage.
 function getLocalStorageDate() {
   return JSON.parse(localStorage.getItem('savedDates')) || [];
 };
 
+// 'click' event listener added to the search button 
 $('#search-location').on('click', function(event){
     event.preventDefault();
-
+    // grabs user entered values for location and dates and formats and saves to variables
     var searchLocation = $('#location-input').val().trim();
     var searchDateUnformatted = $('#date-input').val().trim();  //value received from user input
     var ticketmasterStartDate = dayjs(searchDateUnformatted).format('YYYY-MM-DD');  // user input reformatted to ticketmaster required format using dayjs
     var ticketmasterEndDate = (dayjs(ticketmasterStartDate).add(1, 'day')).format('YYYY-MM-DD'); // user input + 1 day using dayjs
-    
+    // adds saved locations and dates to arrays so that they can be saved to local storage
     savedLocations.push(searchLocation);
     savedDates.push(ticketmasterStartDate);
     $("#location-input").val('');
     $("#date-input").val('');
-    
     localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
     localStorage.setItem("savedDates", JSON.stringify(savedDates));
-    
+    //renders buttons for previously saved locations/dates, clears previous search results from screen and renders new search results from the 3 API's.
+
     renderSaved();
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
     getBreweries(searchLocation);
     getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
-
 });
 
+//function for rendering buttons for previously searched locations/dates.
 function renderSaved(){
   $('#search-history').empty();
 
@@ -87,9 +96,9 @@ function renderSaved(){
       locBtn.text(savedLocations[i]);
       $('#search-history').append(locBtn);
   }
-
 };
 
+// function that will pull search results when search history buttons are clicked.
 function displaySearchHistory () {
 
   var savedCityName = $(this).attr('saved');
@@ -108,6 +117,24 @@ function displaySearchHistory () {
 
 };
 
+// clear search history button
+
+function clearSearchHistory() {
+  var clearBtn = $('<button>');
+  clearBtn.addClass('clear-search-button');
+  clearBtn.text('Clear Searches');
+
+  $(clearBtn).on('click', function(event) {
+    event.preventDefault();
+    window.localStorage.clear();
+    $('#search-history').empty();
+    
+    savedLocations = [];
+
+  });
+
+  $('#clear-search').append(clearBtn)
+}
 // function to render data received from Ticketmaster API onto cards
 
 function getTicketMaster(location, startDate, endDate) {
@@ -123,6 +150,7 @@ function getTicketMaster(location, startDate, endDate) {
       console.log((data));
       ticketmasterEl.append(`
            <h2>🎫Local Events🎟</h2>
+           <br>
         `);
         for (var i = 0; i < data._embedded.events.length; i++) {
           var eventName = data._embedded.events[i].name;
@@ -171,17 +199,19 @@ function getTicketMaster(location, startDate, endDate) {
     })
 }
 
+// function for clearing previous results from the 3 API's.
 function clearSearchResults() {
   airbnbEl.empty();
   ticketmasterEl.empty();
   breweryEl.empty();
 }
 
-function getBreweries(location) {
-
-  const breweryUrl = "https://api.openbrewerydb.org/breweries?by_city=" + location + "&per_page=10";
-  fetch(breweryUrl)
-    .then(function (response) {
+// function for pulling from Open Breweries API.  Will show a list of local breweries for the city entered by the user.
+ function getBreweries(location) {
+    
+    const breweryUrl = "https://api.openbrewerydb.org/breweries?by_city=" + location + "&per_page=10";
+    fetch(breweryUrl)
+    .then(function(response) {
 
       return response.json()
 
@@ -190,6 +220,7 @@ function getBreweries(location) {
       console.log((data));
       breweryEl.append(`
            <h2>🍺Local Breweries🍺</h2>
+           <br>
         `);
       for (var i = 0; i < data.length; i++) {
         var breweryName = data[i].name;
@@ -212,11 +243,12 @@ function getBreweries(location) {
 
 }
 
-function getAirbnb(location, checkInDate, checkOutDate) {
+ // function for pulling Airbnb listings from the Airbnb API for the city entered by the user.
+ function getAirbnb(location, checkInDate, checkOutDate) {
   var settings = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': 'a2bc05b236msh7287f021f76321ap10f7f6jsn319c2f597455',
+      'X-RapidAPI-Key': '921757d737mshb674ed19264e09cp1e780fjsnb5446d67db98',
       'X-RapidAPI-Host': 'airbnb13.p.rapidapi.com'
     }
   };
@@ -231,6 +263,7 @@ function getAirbnb(location, checkInDate, checkOutDate) {
       console.log(data);
       airbnbEl.append(`
         <h2> Airbnb Listings </h2>
+        <br>
       `)
 
       for (var i = 0; i < 6; i++) {
@@ -269,5 +302,12 @@ function getAirbnb(location, checkInDate, checkOutDate) {
     .catch(err => console.error(err));
     } 
 
-  
+  // 'click' event listener added to buttons which will call the function for rendering data from previous searches
    $(document).on('click', '.saved-search-button', displaySearchHistory);
+
+   // Materialize 'datepicker' - allows datepicker calendar to pop-up when user clicks on date box
+   
+   $(document).ready(function(){
+    $('.datepicker').datepicker();
+  });
+          
