@@ -15,6 +15,7 @@ var sideNav = document.querySelector(".sidenav");
   M.Sidenav.init(sideNav, {});
   
 renderSaved();
+clearSearchHistory();
 
 // function to pull saved locations from Local Storage.
 function getLocalStorage() {
@@ -85,6 +86,24 @@ function displaySearchHistory () {
 
 };
 
+// clear search history button
+
+function clearSearchHistory() {
+  var clearBtn = $('<button>');
+  clearBtn.addClass('clear-search-button');
+  clearBtn.text('Clear Searches');
+
+  $(clearBtn).on('click', function(event) {
+    event.preventDefault();
+    window.localStorage.clear();
+    $('#search-history').empty();
+    
+    savedLocations = [];
+
+  });
+
+  $('#clear-search').append(clearBtn)
+}
 // function to render data received from Ticketmaster API onto cards
 
 function getTicketMaster(location, startDate, endDate) {
@@ -100,6 +119,7 @@ function getTicketMaster(location, startDate, endDate) {
         console.log((data));
         ticketmasterEl.append(`
            <h2>🎫Local Events🎟</h2>
+           <br>
         `);
         for (var i = 0; i < data._embedded.events.length; i++) {
           var eventName = data._embedded.events[i].name;
@@ -169,6 +189,7 @@ function clearSearchResults() {
         console.log((data));
         breweryEl.append(`
            <h2>🍺Local Breweries🍺</h2>
+           <br>
         `);
         for (var i = 0; i < data.length; i++) {
           var breweryName = data[i].name;
@@ -196,7 +217,7 @@ function clearSearchResults() {
   var settings = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': 'a2bc05b236msh7287f021f76321ap10f7f6jsn319c2f597455',
+      'X-RapidAPI-Key': '921757d737mshb674ed19264e09cp1e780fjsnb5446d67db98',
       'X-RapidAPI-Host': 'airbnb13.p.rapidapi.com'
     }
   };
@@ -211,6 +232,7 @@ function clearSearchResults() {
       console.log(data);
       airbnbEl.append(`
         <h2> Airbnb Listings </h2>
+        <br>
       `)
 
       for (var i = 0; i < 6; i++) {

@@ -21,6 +21,7 @@ Our website is very user friendly.  Navigate to the enter city tab and enter the
 
 ## Screenshot
 
+![screenshot](./assets/not-tripadvisor.png)
 
 
 ## Licenses
