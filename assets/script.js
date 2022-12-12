@@ -10,6 +10,10 @@ var breweryEl = $("#breweries");
 var airbnbEl = $("#airbnb");
 
 // function call to render buttons for previously saved locations/dates.
+
+var sideNav = document.querySelector(".sidenav");
+  M.Sidenav.init(sideNav, {});
+  
 renderSaved();
 
 // function to pull saved locations from Local Storage.
@@ -38,6 +42,8 @@ $('#search-location').on('click', function(event){
     localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
     localStorage.setItem("savedDates", JSON.stringify(savedDates));
     //renders buttons for previously saved locations/dates, clears previous search results from screen and renders new search results from the 3 API's.
+
+    
     renderSaved();
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
