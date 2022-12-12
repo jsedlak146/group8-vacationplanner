@@ -1,8 +1,6 @@
 var savedLocations = getLocalStorage();
 var savedDates = getLocalStorageDate();
 
-
-
 var ticketmasterEl = $("#ticketmaster");
 var breweryEl = $("#breweries");
 var airbnbEl = $("#airbnb");
@@ -38,6 +36,10 @@ $('#search-location').on('click', function (event) {
 
   localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
   localStorage.setItem("savedDates", JSON.stringify(savedDates));
+
+var sideNav = document.querySelector(".sidenav");
+  M.Sidenav.init(sideNav, {});
+  
 renderSaved();
 
 function getLocalStorage() {
@@ -63,9 +65,6 @@ $('#search-location').on('click', function(event){
     
     localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
     localStorage.setItem("savedDates", JSON.stringify(savedDates));
-    
-    
-    
     
     renderSaved();
     clearSearchResults();
