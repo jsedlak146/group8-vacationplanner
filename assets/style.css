@@ -64,7 +64,6 @@ p {
 }
 
 .hero p {
-  max-width: 90%;
   text-align: center;
 }
 
@@ -83,6 +82,7 @@ p {
   margin: 0 0 20px 0;
   border: 3px solid var(--dark);
   border-radius: var(--border-radius);
+  align-items: center;
 }
 
 .card-header {
@@ -403,17 +403,17 @@ p {
 }
 
 #plane {
-  width: 15%;
+  width: 12%;
   animation: moveImgRight 5s ease-out infinite;
   position: absolute;
 }
 
 @keyframes moveImgRight{
   0% {
-  transform: translateX(-375%) translateY(-65%);
+  transform: translateX(-450%) translateY(-50%);
   }
   100% {
-  transform: translateX(375%) translateY(-65%);
+  transform: translateX(450%) translateY(-50%);
   }
 }
 
