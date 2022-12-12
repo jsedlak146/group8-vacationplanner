@@ -27,6 +27,7 @@ h1, h2, h3
   margin: 0;
   color: var(--dark);
   line-height: 1.25;
+  text-align: center;
 }
 
 main {
@@ -63,10 +64,6 @@ p {
 }
 
 .hero p {
-<<<<<<< HEAD
-  
-=======
->>>>>>> main
   text-align: center;
 }
 
@@ -424,6 +421,10 @@ p {
   font-size: 3em;
 }
 
+#breweries ul {
+  text-align: center;
+}
+
 .brewery-names {
   font-size: 1em;
 }
@@ -495,7 +496,7 @@ p {
   
 .saved-search-button:hover {
   font-weight: bolder;
-  border-width: 0;
+  border-color: #26a69a;
   background-color: #26a69a;
   color: #fff;
   cursor: pointer;
@@ -511,6 +512,11 @@ p {
 .clear-search-button {
   border-width: 2px;
   background-color: #fff;
+}
+
+.clear-search-button:hover {
+  background-color: black;
+  color: #fff;
 }
 
 hr {

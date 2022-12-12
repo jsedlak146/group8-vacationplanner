@@ -48,7 +48,7 @@ $('#search-location').on('click', function(event){
     clearSearchResults();
     getTicketMaster(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
     getBreweries(searchLocation);
-    // getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
+    getAirbnb(searchLocation, ticketmasterStartDate, ticketmasterEndDate);
 });
 
 //function for rendering buttons for previously searched locations/dates.
@@ -82,7 +82,7 @@ function displaySearchHistory () {
   clearSearchResults();
   getTicketMaster(savedCityName, savedDate, defaultEndDate);
   getBreweries(savedCityName);
-  // getAirbnb(savedCityName, savedDate, defaultEndDate);
+  getAirbnb(savedCityName, savedDate, defaultEndDate);
 
 };
 
