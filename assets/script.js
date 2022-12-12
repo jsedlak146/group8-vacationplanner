@@ -217,7 +217,7 @@ function clearSearchResults() {
   var settings = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': 'a2bc05b236msh7287f021f76321ap10f7f6jsn319c2f597455',
+      'X-RapidAPI-Key': '921757d737mshb674ed19264e09cp1e780fjsnb5446d67db98',
       'X-RapidAPI-Host': 'airbnb13.p.rapidapi.com'
     }
   };
