@@ -13,6 +13,9 @@ var airbnbEl = $("#airbnb");
 
 var sideNav = document.querySelector(".sidenav");
   M.Sidenav.init(sideNav, {});
+
+  var ss = document.querySelectorAll('.scrollspy');
+M.ScrollSpy.init(ss, {});
   
 renderSaved();
 clearSearchHistory();
@@ -108,16 +111,16 @@ function clearSearchHistory() {
 
 function getTicketMaster(location, startDate, endDate) {
   const apiKey = "FtEqYpIoWBFSbSArl0CV46XT95pYEReh";
-  const ticketMasterUrl ="https://app.ticketmaster.com/discovery/v2/events?apikey=" + apiKey + "&locale=*&startDateTime=" + startDate + "T11:10:00Z&endDateTime=" + endDate + "T11:11:00Z&city=" + location;
+  const ticketMasterUrl = "https://app.ticketmaster.com/discovery/v2/events?apikey=" + apiKey + "&locale=*&startDateTime=" + startDate + "T11:10:00Z&endDateTime=" + endDate + "T11:11:00Z&city=" + location;
   fetch(ticketMasterUrl)
-    .then(function(response) {
+    .then(function (response) {
 
       return response.json()
 
     })
-    .then(function(data) {
-        console.log((data));
-        ticketmasterEl.append(`
+    .then(function (data) {
+      console.log((data));
+      ticketmasterEl.append(`
            <h2>🎫Local Events🎟</h2>
            <br>
         `);
@@ -183,34 +186,34 @@ function clearSearchResults() {
     .then(function(response) {
 
       return response.json()
-  
+
     })
-    .then(function(data) {
-        console.log((data));
-        breweryEl.append(`
+    .then(function (data) {
+      console.log((data));
+      breweryEl.append(`
            <h2>🍺Local Breweries🍺</h2>
            <br>
         `);
-        for (var i = 0; i < data.length; i++) {
-          var breweryName = data[i].name;
-          var breweryLocation = data[i].street + " " + data[i].city + ", " + data[i].state;
-          var breweryUrl = data[i].website_url;
-          var breweryUrlAdj;
-          var breweryPhone = data[i].phone;
-          if (breweryUrl === null) {
-            breweryUrlAdj = "No website available.";
-          } else {
-            var breweryUrlAdj = breweryUrl.slice(0, 4) + "s" + breweryUrl.slice(4);
-          }
-          breweryEl.append(`
+      for (var i = 0; i < data.length; i++) {
+        var breweryName = data[i].name;
+        var breweryLocation = data[i].street + " " + data[i].city + ", " + data[i].state;
+        var breweryUrl = data[i].website_url;
+        var breweryUrlAdj;
+        var breweryPhone = data[i].phone;
+        if (breweryUrl === null) {
+          breweryUrlAdj = "No website available.";
+        } else {
+          var breweryUrlAdj = breweryUrl.slice(0, 4) + "s" + breweryUrl.slice(4);
+        }
+        breweryEl.append(`
               <ul>
                 <li class="brewery-names">${breweryName + ", Address: " + breweryLocation + ", Phone: " + breweryPhone + ", url: " + "<a href=" + breweryUrlAdj + ">" + breweryUrlAdj + "</a>"}</li>
               </ul>
           `);
-  };
+      };
     })
 
- }
+}
 
  // function for pulling Airbnb listings from the Airbnb API for the city entered by the user.
  function getAirbnb(location, checkInDate, checkOutDate) {
@@ -224,11 +227,11 @@ function clearSearchResults() {
   var airbnbUrl = "https://airbnb13.p.rapidapi.com/search-location?location=" + location + "&checkin=" + checkInDate + "&checkout=" + checkOutDate + "&adults=1&children=0&infants=0&page=1"
 
 
-  fetch(airbnbUrl, settings) 
-    .then(function(response){
+  fetch(airbnbUrl, settings)
+    .then(function (response) {
       return response.json()
     })
-    .then(function(data) {
+    .then(function (data) {
       console.log(data);
       airbnbEl.append(`
         <h2> Airbnb Listings </h2>
@@ -264,7 +267,8 @@ function clearSearchResults() {
           </div>
         </div>
       </div>
-        `)
+
+      `)
       }
     })
     .catch(err => console.error(err));
@@ -278,4 +282,5 @@ function clearSearchResults() {
    $(document).ready(function(){
     $('.datepicker').datepicker();
   });
-          
+        
+

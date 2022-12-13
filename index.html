@@ -25,20 +25,20 @@
               <a href="#event">Event</a>
             </li>
             <li>
-              <a href="#attractions">Attractions</a>
+              <a href="#search-history">Airbnb</a>
             </li>
             <li>
-              <a href="#airbnb">AirBnb</a>
+              <a href="#breweries">breweries</a>
             </li>
             <li>
               <a class="waves-effect waves-light #827717 lime darken-2 white-text btn-small
-               " href="#">Search
+               " href="#search">Search
               </a>
             </li>
             <li>
               <a class="btn-floating #d50000 red accent-4  z-depth-0
                " href="#">
-               <i class="material-icons">notifications</i>
+                <i class="material-icons">notifications</i>
               </a>
             </li>
           </ul>
@@ -51,13 +51,13 @@
       <a href="#ticketmaster">Event</a>
     </li>
     <li>
-      <a href="#attractions">Attractions</a>
+      <a href="#search-history">AirBnb</a>
     </li>
     <li>
-      <a href="#airbnb">AirBnb</a>
+      <a href="#breweries">Breweries</a>
     </li>
     <li>
-      <a href="#search-history">Search</a>
+      <a href="#search">Search</a>
     </li>
   </ul>
 
@@ -68,10 +68,10 @@
   </header>
 
   <main>
-    <div class="container flex-row justify-space-between">
+    <div id="search" class="container flex-row justify-space-between scrollspy">
       <div class="row col-12 col-md-6">
-      <div class="card searchBox">
-         <h3 class="card-header text-uppercase">Enter your city here</h3>
+        <div class="card searchBox">
+          <h3 class="card-header text-uppercase">Enter your city here</h3>
           <form id="where">
             <label for="location-input"></label>
             <input type="text" id="location-input" placeholder="Ex. New York">
@@ -81,20 +81,20 @@
               <button type="submit" class="btn bg-danger" id="search-location">Search</button>
             </div>
           </form>
-          
-        </form>
+
+          </form>
         </div>
         <div class="row">
           <div class="card historyBox">
             <h3 class="card-header text-uppercase">Search History</h3>
-            <div id="search-history" class="card-body">
+            <div id="search-history" class="card-body scrollspy">
             </div>
             <hr>
             <div id="clear-search">
             </div>
           </div>
         </div>
-     </div>
+      </div>
     </div>
     
     <!-- These are our divs for our 3 APIs -->
@@ -102,11 +102,12 @@
     <div class="row" id="airbnb"></div>
 
     <div class="row" id="ticketmaster"></div>
-    
-    <div id="breweries"></div>
+
+    <div id="breweries" class="scrollspy"></div>
 
   </main>
-  <footer class="page-footer grey darken-3">
+
+  <footer  class="page-footer grey darken-3 scrollspy">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
